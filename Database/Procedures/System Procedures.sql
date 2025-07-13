@@ -1,6 +1,6 @@
 ---- insert new student
 
-create or alter procedure insertstudent   --mariam
+create or alter procedure insertstudent   
 @studentid char(14),@firstname varchar(20) , @lastname varchar(20),@dateofbirth date,@email varchar(70),
 @phone char(11),@address varchar(20), @gender char(1),@faculty varchar(50),@track varchar(100),@branch varchar(50)
 as
@@ -351,6 +351,36 @@ begin
 		print 'Fail'
 
 end
+
+
+
+
+
+
+
+
+CREATE or alter PROCEDURE CreateExamMannually
+    @ExamID INT,
+    @InstructorID char(14),
+    @QuestionIDs NVARCHAR(MAX) 
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+        DECLARE @QuestionIDTable TABLE (QuestionID BIGINT);
+
+    INSERT INTO @QuestionIDTable (QuestionID)
+    SELECT value 
+    FROM STRING_SPLIT(@QuestionIDs, ',')
+
+    INSERT INTO ExamInstructorQuestion (ExamID, InstructorID, QuestionID)
+    SELECT @ExamID, @InstructorID, QuestionID
+    FROM @QuestionIDTable
+
+    PRINT 'Exam Created Successfully'
+END
+
+
 
 
 

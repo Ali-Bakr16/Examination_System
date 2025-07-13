@@ -1,16 +1,20 @@
 ---S----Insert new Student 
 
 
-Execute insertstudent '20202010105050','Aly','Hussien', '2002-04-05', 'aly12hussienaa@gmail.com', '01025536582', 'Minia','M','computers and information','Data Engineer','ITI_Minia'
+Execute insertstudent '20202010135050','Aly','Hussien', '2002-04-05', 'aly13hussienaa@gmail.com', '01025336582', 'Minia','M','computers and information','Data Engineer','ITI_Minia'
 
 
 --A---- Create Exam   
-EXECUTE CreateExam 201, 1,1,2,2,2,'corrective','13:00:00','14:00:00','2025-5-22',100
+EXECUTE CreateExam 208, 1,1,2,2,2,'corrective','13:00:00','14:00:00','2025-5-22',100
 
 ---- Time Validation
 EXECUTE CreateExam 202,1,1,2,2,2,'normal','13:00:00','10:00:00','2025-5-22',100
 
 ---S---Assign Exam To Student
+
+execute CreateExamMannually 105,'20240623000191','611,612,613,614,615,617'
+
+select * from ExamInstructorQuestion
 
 -----Return Error because enter wrong date and time
 
@@ -36,9 +40,9 @@ execute assignExamcorrective '10000000000100','Database',2,'2025-05-22','01:00:0
 
 ---A------ Correct Text Question
 
-execute CorrectTextQuestion 80,'10000000000881',1239,'Answer 875',2
+execute CorrectTextQuestion 88,'10000000000882',1239,'Answer 875',2
 
-execute CorrectTextQuestion 88,'10000000000871',1233,'Answer 914',2
+execute CorrectTextQuestion 87,'10000000000871',1233,'Answer 914',2
 
 
 
