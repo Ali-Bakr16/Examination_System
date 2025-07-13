@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# SQL Server Management Studio Solution File, Format Version 20.00
+VisualStudioVersion = 15.0.28307.421
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "ITI_Examination_System", "ITI_Examination_System\ITI_Examination_System.ssmssqlproj", "{EAADE4B2-D0AF-4079-A899-BE7A232469FB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Default|Default = Default|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EAADE4B2-D0AF-4079-A899-BE7A232469FB}.Default|Default.ActiveCfg = Default
+		{9108900F-E14F-4F7D-B720-E3E5D7DDEC2B}.Default|Default.ActiveCfg = Default
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {334B7DB1-A767-4D45-BE21-023CA26C1277}
+	EndGlobalSection
+EndGlobal

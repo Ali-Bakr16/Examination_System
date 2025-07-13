@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="ALY_MSSQLSERVER01.db19369"
+  DTS:DTSID="{6E490DBA-F1B1-4CE2-92EF-809C757F9B2E}"
+  DTS:CreationName="OLEDB">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectRetryCount="1"
+      DTS:ConnectRetryInterval="5"
+      DTS:ConnectionString="Data Source=ALY\MSSQLSERVER01;Initial Catalog=db19369;Provider=SQLNCLI11.1;Integrated Security=SSPI;Application Name=SSIS-lastversion-{6E490DBA-F1B1-4CE2-92EF-809C757F9B2E}ALY\MSSQLSERVER01.db19369;Auto Translate=False;" />
+  </DTS:ObjectData>
+</DTS:ConnectionManager>

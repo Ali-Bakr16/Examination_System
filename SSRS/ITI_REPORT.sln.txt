@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36212.18 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F14B399A-7131-4C87-9E4B-1186C45EF12D}") = "ITI_REPORT", "C:\Users\elnoor\Documents\emam_report\ITI_REPORT.rptproj", "{3345366A-F994-0976-B7E2-7DB76A5CC852}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		DebugLocal|Default = DebugLocal|Default
+		Release|Default = Release|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3345366A-F994-0976-B7E2-7DB76A5CC852}.Debug|Default.ActiveCfg = Debug
+		{3345366A-F994-0976-B7E2-7DB76A5CC852}.Debug|Default.Build.0 = Debug
+		{3345366A-F994-0976-B7E2-7DB76A5CC852}.Debug|Default.Deploy.0 = Debug
+		{3345366A-F994-0976-B7E2-7DB76A5CC852}.DebugLocal|Default.ActiveCfg = DebugLocal
+		{3345366A-F994-0976-B7E2-7DB76A5CC852}.DebugLocal|Default.Build.0 = DebugLocal
+		{3345366A-F994-0976-B7E2-7DB76A5CC852}.Release|Default.ActiveCfg = Release
+		{3345366A-F994-0976-B7E2-7DB76A5CC852}.Release|Default.Build.0 = Release
+		{3345366A-F994-0976-B7E2-7DB76A5CC852}.Release|Default.Deploy.0 = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DBCAED01-A0C0-4DEC-BDB5-1411FFD9FA93}
+	EndGlobalSection
+EndGlobal

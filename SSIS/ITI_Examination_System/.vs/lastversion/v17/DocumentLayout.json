@@ -1,0 +1,68 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "G:\\Power BI Training\\Final Project\\Project\\SSIS\\New folder\\lastversion\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{2FC3A602-20E2-EA7F-4AEE-BC7FDF3A7DC0}|lastversion\\lastversion.dtproj|G:\\Power BI Training\\Final Project\\Project\\SSIS\\New folder\\lastversion\\lastversion\\InstructorFact.dtsx||{CC84AFBD-DA02-46F4-8623-9F07E5569EDB}|Design",
+      "RelativeMoniker": "D:0:0:{2FC3A602-20E2-EA7F-4AEE-BC7FDF3A7DC0}|lastversion\\lastversion.dtproj|solutionrelative:lastversion\\InstructorFact.dtsx||{CC84AFBD-DA02-46F4-8623-9F07E5569EDB}|Design"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FC3A602-20E2-EA7F-4AEE-BC7FDF3A7DC0}|lastversion\\lastversion.dtproj|G:\\Power BI Training\\Final Project\\Project\\SSIS\\New folder\\lastversion\\lastversion\\NewStudentTrack.dtsx||{CC84AFBD-DA02-46F4-8623-9F07E5569EDB}|Design",
+      "RelativeMoniker": "D:0:0:{2FC3A602-20E2-EA7F-4AEE-BC7FDF3A7DC0}|lastversion\\lastversion.dtproj|solutionrelative:lastversion\\NewStudentTrack.dtsx||{CC84AFBD-DA02-46F4-8623-9F07E5569EDB}|Design"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FC3A602-20E2-EA7F-4AEE-BC7FDF3A7DC0}|lastversion\\lastversion.dtproj|G:\\Power BI Training\\Final Project\\Project\\SSIS\\New folder\\lastversion\\lastversion\\StudentFact.dtsx||{CC84AFBD-DA02-46F4-8623-9F07E5569EDB}|Design",
+      "RelativeMoniker": "D:0:0:{2FC3A602-20E2-EA7F-4AEE-BC7FDF3A7DC0}|lastversion\\lastversion.dtproj|solutionrelative:lastversion\\StudentFact.dtsx||{CC84AFBD-DA02-46F4-8623-9F07E5569EDB}|Design"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "StudentFact.dtsx [Design]",
+              "DocumentMoniker": "G:\\Power BI Training\\Final Project\\Project\\SSIS\\New folder\\lastversion\\lastversion\\StudentFact.dtsx",
+              "RelativeDocumentMoniker": "lastversion\\StudentFact.dtsx",
+              "ToolTip": "G:\\Power BI Training\\Final Project\\Project\\SSIS\\New folder\\lastversion\\lastversion\\StudentFact.dtsx [Design]",
+              "RelativeToolTip": "lastversion\\StudentFact.dtsx [Design]",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|",
+              "WhenOpened": "2025-07-10T00:39:47.08Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "NewStudentTrack.dtsx [Design]",
+              "DocumentMoniker": "G:\\Power BI Training\\Final Project\\Project\\SSIS\\New folder\\lastversion\\lastversion\\NewStudentTrack.dtsx",
+              "RelativeDocumentMoniker": "lastversion\\NewStudentTrack.dtsx",
+              "ToolTip": "G:\\Power BI Training\\Final Project\\Project\\SSIS\\New folder\\lastversion\\lastversion\\NewStudentTrack.dtsx [Design]",
+              "RelativeToolTip": "lastversion\\NewStudentTrack.dtsx [Design]",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|",
+              "WhenOpened": "2025-07-10T00:31:18.866Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "InstructorFact.dtsx [Design]",
+              "DocumentMoniker": "G:\\Power BI Training\\Final Project\\Project\\SSIS\\New folder\\lastversion\\lastversion\\InstructorFact.dtsx",
+              "RelativeDocumentMoniker": "lastversion\\InstructorFact.dtsx",
+              "ToolTip": "G:\\Power BI Training\\Final Project\\Project\\SSIS\\New folder\\lastversion\\lastversion\\InstructorFact.dtsx [Design]",
+              "RelativeToolTip": "lastversion\\InstructorFact.dtsx [Design]",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|",
+              "WhenOpened": "2025-07-09T22:17:29.629Z",
+              "EditorCaption": " [Design]"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
