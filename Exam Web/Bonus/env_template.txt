@@ -1,0 +1,24 @@
+# Flask Configuration
+SECRET_KEY=your-super-secret-key-change-this-in-production
+FLASK_ENV=development
+DEBUG=True
+
+# Database Configuration
+DB_SERVER=localhost
+DB_NAME=ITIExaminationDB
+DB_USERNAME=sa
+DB_PASSWORD=your_password
+DB_DRIVER=ODBC+Driver+17+for+SQL+Server
+
+# JWT Configuration
+JWT_SECRET_KEY=your-jwt-secret-key-change-this-in-production
+
+# Application Configuration
+HOST=0.0.0.0
+PORT=5000
+
+# CORS Configuration
+CORS_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
+
+# Security Configuration
+SESSION_COOKIE_SECURE=False 

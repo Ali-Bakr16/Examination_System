@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Exam Page</title>
+<style>
+        body { font-family: Arial, sans-serif; margin: 0; background: #f8f9fa; }
+        .exam-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #343a40;
+            color: #fff;
+            padding: 24px 32px 18px 32px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .exam-title {
+            font-size: 2em;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        #timer {
+            font-size: 1.3em;
+            color: #ffc107;
+            background: #23272b;
+            padding: 8px 18px;
+            border-radius: 8px;
+            min-width: 120px;
+            text-align: center;
+        }
+        .exam-content {
+            max-width: 800px;
+            margin: 40px auto 0 auto;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+            padding: 32px 36px 24px 36px;
+        }
+        .question-container {
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background: #fff;
+            transition: all 0.3s ease;
+        }
+        .question-container:hover {
+            border-color: #007bff;
+            box-shadow: 0 2px 8px rgba(0,123,255,0.1);
+        }
+        .question-container.correct {
+            border-color: #28a745;
+            background: #f8fff9;
+        }
+        .question-container.incorrect {
+            border-color: #dc3545;
+            background: #fff8f8;
+        }
+        .question {
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            font-weight: 500;
+            color: #333;
+        }
+        .question-number {
+            color: #007bff;
+            font-weight: 600;
+            margin-right: 8px;
+        }
+        .options {
+            margin-left: 20px;
+            margin-top: 12px;
+        }
+        .option {
+            margin-bottom: 8px;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .option:hover {
+            background-color: #f8f9fa;
+        }
+        .option input[type="radio"] {
+            margin-right: 8px;
+        }
+        .option.correct {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .option.incorrect {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .option.selected {
+            background-color: #e2e3e5;
+            border: 1px solid #d6d8db;
+        }
+        .submit-section {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #e9ecef;
+        }
+        button[type="submit"] {
+            background: #007bff;
+            color: #fff;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button[type="submit"]:hover {
+            background: #0056b3;
+        }
+        button[type="submit"]:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+        .score-display {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+        }
+        .score-display.hidden {
+            display: none;
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #6c757d;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+<div class="exam-header">
+<div class="exam-title" id="exam-title">Database MCQ Exam</div>
+<div id="timer">Loading timer...</div>
+</div>
+<div class="exam-content">
+<div class="loading" id="questions-container">Loading questions...<div class="question-container"><div class="question">Q1: Which of the following is a type of database model?</div><div class="options"><div class="option"><input name="question-1" type="radio" value="A) HTML"/><label>A) HTML</label></div><div class="option"><input name="question-1" type="radio" value="B) Hierarchical"/><label>B) Hierarchical</label></div><div class="option"><input name="question-1" type="radio" value="C) JSON"/><label>C) JSON</label></div><div class="option"><input name="question-1" type="radio" value="D) TCP/IP"/><label>D) TCP/IP</label></div></div></div><div class="question-container"><div class="question">Q2: What is the primary key in a database?</div><div class="options"><div class="option"><input name="question-2" type="radio" value="A) A key that opens the database"/><label>A) A key that opens the database</label></div><div class="option"><input name="question-2" type="radio" value="B) A field that uniquely identifies a record"/><label>B) A field that uniquely identifies a record</label></div><div class="option"><input name="question-2" type="radio" value="C) A key used for sorting records"/><label>C) A key used for sorting records</label></div><div class="option"><input name="question-2" type="radio" value="D) A password to access the database"/><label>D) A password to access the database</label></div></div></div><div class="question-container"><div class="question">Q3: Which SQL command is used to retrieve data from a database?</div><div class="options"><div class="option"><input name="question-3" type="radio" value="A) INSERT"/><label>A) INSERT</label></div><div class="option"><input name="question-3" type="radio" value="B) UPDATE"/><label>B) UPDATE</label></div><div class="option"><input name="question-3" type="radio" value="C) SELECT"/><label>C) SELECT</label></div><div class="option"><input name="question-3" type="radio" value="D) DELETE"/><label>D) DELETE</label></div></div></div><div class="question-container"><div class="question">Q4: What does the acronym SQL stand for?</div><div class="options"><div class="option"><input name="question-4" type="radio" value="A) Structured Question Language"/><label>A) Structured Question Language</label></div><div class="option"><input name="question-4" type="radio" value="B) Strong Query Language"/><label>B) Strong Query Language</label></div><div class="option"><input name="question-4" type="radio" value="C) Structured Query Language"/><label>C) Structured Query Language</label></div><div class="option"><input name="question-4" type="radio" value="D) Standard Quick Language"/><label>D) Standard Quick Language</label></div></div></div><div class="question-container"><div class="question">Q5: Which of the following is NOT a type of SQL JOIN?</div><div class="options"><div class="option"><input name="question-5" type="radio" value="A) INNER JOIN"/><label>A) INNER JOIN</label></div><div class="option"><input name="question-5" type="radio" value="B) OUTER JOIN"/><label>B) OUTER JOIN</label></div><div class="option"><input name="question-5" type="radio" value="C) LEFT JOIN"/><label>C) LEFT JOIN</label></div><div class="option"><input name="question-5" type="radio" value="D) SIDE JOIN"/><label>D) SIDE JOIN</label></div></div></div><div class="question-container"><div class="question">Q6: In relational databases, a foreign key is used to:</div><div class="options"><div class="option"><input name="question-6" type="radio" value="A) Uniquely identify a table"/><label>A) Uniquely identify a table</label></div><div class="option"><input name="question-6" type="radio" value="B) Represent a relationship between tables"/><label>B) Represent a relationship between tables</label></div><div class="option"><input name="question-6" type="radio" value="C) Encrypt the data in a table"/><label>C) Encrypt the data in a table</label></div><div class="option"><input name="question-6" type="radio" value="D) Create a copy of another table"/><label>D) Create a copy of another table</label></div></div></div><div class="question-container"><div class="question">Q7: Which of the following is a NoSQL database?</div><div class="options"><div class="option"><input name="question-7" type="radio" value="A) MySQL"/><label>A) MySQL</label></div><div class="option"><input name="question-7" type="radio" value="B) PostgreSQL"/><label>B) PostgreSQL</label></div><div class="option"><input name="question-7" type="radio" value="C) MongoDB"/><label>C) MongoDB</label></div><div class="option"><input name="question-7" type="radio" value="D) Oracle"/><label>D) Oracle</label></div></div></div><div class="question-container"><div class="question">Q8: What is normalization in databases?</div><div class="options"><div class="option"><input name="question-8" type="radio" value="A) Increasing data redundancy"/><label>A) Increasing data redundancy</label></div><div class="option"><input name="question-8" type="radio" value="B) Converting data to lowercase"/><label>B) Converting data to lowercase</label></div><div class="option"><input name="question-8" type="radio" value="C) Organizing data to reduce redundancy"/><label>C) Organizing data to reduce redundancy</label></div><div class="option"><input name="question-8" type="radio" value="D) Formatting data into JSON"/><label>D) Formatting data into JSON</label></div></div></div><div class="question-container"><div class="question">Q9: What is the default port for MySQL?</div><div class="options"><div class="option"><input name="question-9" type="radio" value="A) 3306"/><label>A) 3306</label></div><div class="option"><input name="question-9" type="radio" value="B) 1433"/><label>B) 1433</label></div><div class="option"><input name="question-9" type="radio" value="C) 8080"/><label>C) 8080</label></div><div class="option"><input name="question-9" type="radio" value="D) 1521"/><label>D) 1521</label></div></div></div><div class="question-container"><div class="question">Q10: Which SQL clause is used to filter the results of a query?</div><div class="options"><div class="option"><input name="question-10" type="radio" value="A) ORDER BY"/><label>A) ORDER BY</label></div><div class="option"><input name="question-10" type="radio" value="B) WHERE"/><label>B) WHERE</label></div><div class="option"><input name="question-10" type="radio" value="C) FROM"/><label>C) FROM</label></div><div class="option"><input name="question-10" type="radio" value="D) GROUP BY"/><label>D) GROUP BY</label></div></div></div></div>
+<div class="submit-section">
+<button id="submit-btn" onclick="submitExam()" type="submit">Submit Exam</button>
+<div class="score-display hidden" id="score-display"></div>
+</div>
+</div>
+<script>
+    let questions = [];
+    let userAnswers = {};
+    let examSubmitted = false;
+    let timerInterval;
+    let timeLeft = 0;
+
+    function getQueryParam(name) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(name);
+    }
+
+    function parseDuration(durationStr) {
+        if (!durationStr) return null;
+        const minMatch = durationStr.match(/(\d+)/);
+        if (minMatch) return parseInt(minMatch[1], 10);
+        return null;
+    }
+
+    function startTimer(duration) {
+        timeLeft = duration * 60;
+        updateTimerDisplay();
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            updateTimerDisplay();
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                alert('Time is up! The exam will close.');
+                submitExam();
+            }
+        }, 1000);
+    }
+
+    function updateTimerDisplay() {
+        const min = Math.floor(timeLeft / 60);
+        const sec = timeLeft % 60;
+        document.getElementById('timer').textContent = `Time left: ${min}:${sec.toString().padStart(2, '0')}`;
+    }
+
+    function renderQuestions(questionsData) {
+        const container = document.getElementById('questions-container');
+        container.innerHTML = '';
+        container.className = '';
+
+        questionsData.forEach((q, idx) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question-container';
+            questionDiv.id = `question-${idx}`;
+
+            const questionText = document.createElement('div');
+            questionText.className = 'question';
+            questionText.innerHTML = `<span class="question-number">Q${idx + 1}:</span>${q.question}`;
+            questionDiv.appendChild(questionText);
+
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'options';
+
+            q.options.forEach((option, optIdx) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option';
+                optionDiv.id = `option-${idx}-${optIdx}`;
+
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = `question-${idx}`;
+                radio.value = option;
+                radio.id = `radio-${idx}-${optIdx}`;
+
+                const label = document.createElement('label');
+                label.htmlFor = `radio-${idx}-${optIdx}`;
+                label.textContent = option;
+
+                optionDiv.appendChild(radio);
+                optionDiv.appendChild(label);
+
+                radio.addEventListener('change', function() {
+                    userAnswers[idx] = option;
+                    updateOptionStyles(idx, optIdx);
+                });
+
+                optionsDiv.appendChild(optionDiv);
+            });
+
+            questionDiv.appendChild(optionsDiv);
+            container.appendChild(questionDiv);
+        });
+    }
+
+    function updateOptionStyles(questionIdx, selectedOptIdx) {
+        const questionContainer = document.getElementById(`question-${questionIdx}`);
+        const options = questionContainer.querySelectorAll('.option');
+        
+        // Remove previous styles
+        options.forEach(opt => {
+            opt.classList.remove('selected', 'correct', 'incorrect');
+        });
+
+        // Add selected style
+        const selectedOption = document.getElementById(`option-${questionIdx}-${selectedOptIdx}`);
+        selectedOption.classList.add('selected');
+
+        // If exam is submitted, show correct/incorrect answers
+        if (examSubmitted) {
+            const correctAnswer = questions[questionIdx].correct;
+            const selectedAnswer = userAnswers[questionIdx];
+            
+            options.forEach((opt, optIdx) => {
+                const optionText = opt.querySelector('label').textContent;
+                if (optionText === correctAnswer) {
+                    opt.classList.add('correct');
+                } else if (optionText === selectedAnswer && selectedAnswer !== correctAnswer) {
+                    opt.classList.add('incorrect');
+                }
+            });
+
+            // Update question container style
+            if (selectedAnswer === correctAnswer) {
+                questionContainer.classList.add('correct');
+                questionContainer.classList.remove('incorrect');
+            } else {
+                questionContainer.classList.add('incorrect');
+                questionContainer.classList.remove('correct');
+            }
+        }
+    }
+
+    function submitExam() {
+        if (examSubmitted) return;
+
+        examSubmitted = true;
+        clearInterval(timerInterval);
+
+        // Calculate score
+        let correctAnswers = 0;
+        questions.forEach((q, idx) => {
+            const userAnswer = userAnswers[idx];
+            if (userAnswer === q.correct) {
+                correctAnswers++;
+            }
+            // Show all correct/incorrect answers
+            const questionContainer = document.getElementById(`question-${idx}`);
+            const options = questionContainer.querySelectorAll('.option');
+            
+            options.forEach((opt, optIdx) => {
+                const optionText = opt.querySelector('label').textContent;
+                if (optionText === q.correct) {
+                    opt.classList.add('correct');
+                } else if (optionText === userAnswer && userAnswer !== q.correct) {
+                    opt.classList.add('incorrect');
+                }
+            });
+
+            // Update question container style
+            if (userAnswer === q.correct) {
+                questionContainer.classList.add('correct');
+            } else {
+                questionContainer.classList.add('incorrect');
+            }
+        });
+
+        const score = (correctAnswers / questions.length) * 100;
+        const scoreDisplay = document.getElementById('score-display');
+        scoreDisplay.innerHTML = `
+            <div style="background: ${score >= 70 ? '#d4edda' : '#f8d7da'}; 
+                        color: ${score >= 70 ? '#155724' : '#721c24'}; 
+                        padding: 15px; border-radius: 8px;">
+                <h3>Exam Results</h3>
+                <p>Score: ${correctAnswers}/${questions.length} (${score.toFixed(1)}%)</p>
+                <p>Correct Answers: ${correctAnswers}</p>
+                <p>Incorrect Answers: ${questions.length - correctAnswers}</p>
+            </div>
+        `;
+        scoreDisplay.classList.remove('hidden');
+
+        // Disable submit button
+        document.getElementById('submit-btn').disabled = true;
+        document.getElementById('submit-btn').textContent = 'Exam Submitted';
+    }
+
+    // Load questions from CSV file
+    async function loadQuestions() {
+        try {
+            const response = await fetch('/api/programming_mcq_questions');
+            const data = await response.json();
+            
+            if (data.success) {
+                questions = data.questions;
+                renderQuestions(questions);
+                
+                // Start timer (default 60 minutes if not specified)
+                const examDurationFromQuery = getQueryParam('duration');
+                const durationToUse = examDurationFromQuery ? 
+                    parseDuration(decodeURIComponent(examDurationFromQuery)) : 60;
+                startTimer(durationToUse);
+            } else {
+                document.getElementById('questions-container').innerHTML = 
+                    `<div class="loading">Error: ${data.message}</div>`;
+            }
+        } catch (error) {
+            document.getElementById('questions-container').innerHTML = 
+                `<div class="loading">Error loading questions: ${error.message}</div>`;
+        }
+    }
+
+    // Set exam title from query params if present
+    const examTitleFromQuery = getQueryParam('title');
+    if (examTitleFromQuery) {
+        document.getElementById('exam-title').textContent = decodeURIComponent(examTitleFromQuery);
+    }
+
+    // Load questions when page loads
+    loadQuestions();
+    </script>
+</body>
+</html> 

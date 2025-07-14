@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Page</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; background: #f8f9fa; }
+        .exam-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #343a40;
+            color: #fff;
+            padding: 24px 32px 18px 32px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .exam-title {
+            font-size: 2em;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        #timer {
+            font-size: 1.3em;
+            color: #ffc107;
+            background: #23272b;
+            padding: 8px 18px;
+            border-radius: 8px;
+            min-width: 120px;
+            text-align: center;
+        }
+        .exam-content {
+            max-width: 800px;
+            margin: 40px auto 0 auto;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+            padding: 32px 36px 24px 36px;
+        }
+        .question-container {
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background: #fff;
+            transition: all 0.3s ease;
+        }
+        .question-container:hover {
+            border-color: #007bff;
+            box-shadow: 0 2px 8px rgba(0,123,255,0.1);
+        }
+        .question-container.correct {
+            border-color: #28a745;
+            background: #f8fff9;
+        }
+        .question-container.incorrect {
+            border-color: #dc3545;
+            background: #fff8f8;
+        }
+        .question-container.unanswered {
+            border-color: #ffc107;
+            background: #fffbf0;
+        }
+        .question {
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            font-weight: 500;
+            color: #333;
+        }
+        .question-number {
+            color: #007bff;
+            font-weight: 600;
+            margin-right: 8px;
+        }
+        .options {
+            margin-left: 20px;
+            margin-top: 12px;
+        }
+        .option {
+            margin-bottom: 8px;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .option:hover {
+            background-color: #f8f9fa;
+        }
+        .option input[type="radio"] {
+            margin-right: 8px;
+        }
+        .option.correct {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .option.incorrect {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .option.selected {
+            background-color: #e2e3e5;
+            border: 1px solid #d6d8db;
+        }
+        .submit-section {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #e9ecef;
+        }
+        button[type="submit"] {
+            background: #007bff;
+            color: #fff;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button[type="submit"]:hover {
+            background: #0056b3;
+        }
+        button[type="submit"]:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+        .score-display {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+        }
+        .score-display.hidden {
+            display: none;
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #6c757d;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="exam-header">
+        <div class="exam-title" id="exam-title">Database Quiz</div>
+        <div id="timer">Loading timer...</div>
+    </div>
+    <div class="exam-content">
+        <div id="questions-container" class="loading">
+            <h2>Database Quiz</h2>
+            
+            <div class="question-container">
+                <div class="question">
+                    <span class="question-number">Q1:</span>Which of the following is a type of database model?
+                </div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="question-0" value="HTML" id="radio-0-0">
+                        <label for="radio-0-0">HTML</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="question-0" value="Hierarchical" id="radio-0-1">
+                        <label for="radio-0-1">Hierarchical</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="question-0" value="JSON" id="radio-0-2">
+                        <label for="radio-0-2">JSON</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="question-0" value="TCP/IP" id="radio-0-3">
+                        <label for="radio-0-3">TCP/IP</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-container">
+                <div class="question">
+                    <span class="question-number">Q2:</span>What is the primary key in a database?
+                </div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="question-1" value="A key that opens the database" id="radio-1-0">
+                        <label for="radio-1-0">A key that opens the database</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="question-1" value="A field that uniquely identifies a record" id="radio-1-1">
+                        <label for="radio-1-1">A field that uniquely identifies a record</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="question-1" value="A key used for sorting records" id="radio-1-2">
+                        <label for="radio-1-2">A key used for sorting records</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="question-1" value="A password to access the database" id="radio-1-3">
+                        <label for="radio-1-3">A password to access the database</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-container">
+                <div class="question">
+                    <span class="question-number">Q3:</span>Which SQL command is used to retrieve data from a database?
+                </div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="question-2" value="INSERT" id="radio-2-0">
+                        <label for="radio-2-0">INSERT</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="question-2" value="UPDATE" id="radio-2-1">
+                        <label for="radio-2-1">UPDATE</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="question-2" value="SELECT" id="radio-2-2">
+                        <label for="radio-2-2">SELECT</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="question-2" value="DELETE" id="radio-2-3">
+                        <label for="radio-2-3">DELETE</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-container">
+                <div class="question">
+                    <span class="question-number">Q4:</span>What does the acronym SQL stand for?
+                </div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="question-3" value="Structured Question Language" id="radio-3-0">
+                        <label for="radio-3-0">Structured Question Language</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="question-3" value="Strong Query Language" id="radio-3-1">
+                        <label for="radio-3-1">Strong Query Language</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="question-3" value="Structured Query Language" id="radio-3-2">
+                        <label for="radio-3-2">Structured Query Language</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="question-3" value="Standard Quick Language" id="radio-3-3">
+                        <label for="radio-3-3">Standard Quick Language</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-container">
+                <div class="question">
+                    <span class="question-number">Q5:</span>Which of the following is NOT a type of SQL JOIN?
+                </div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="question-4" value="INNER JOIN" id="radio-4-0">
+                        <label for="radio-4-0">INNER JOIN</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="question-4" value="OUTER JOIN" id="radio-4-1">
+                        <label for="radio-4-1">OUTER JOIN</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="question-4" value="LEFT JOIN" id="radio-4-2">
+                        <label for="radio-4-2">LEFT JOIN</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="question-4" value="SIDE JOIN" id="radio-4-3">
+                        <label for="radio-4-3">SIDE JOIN</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-container">
+                <div class="question">
+                    <span class="question-number">Q6:</span>In relational databases, a foreign key is used to:
+                </div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="question-5" value="Uniquely identify a table" id="radio-5-0">
+                        <label for="radio-5-0">Uniquely identify a table</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="question-5" value="Represent a relationship between tables" id="radio-5-1">
+                        <label for="radio-5-1">Represent a relationship between tables</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="question-5" value="Encrypt the data in a table" id="radio-5-2">
+                        <label for="radio-5-2">Encrypt the data in a table</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="question-5" value="Create a copy of another table" id="radio-5-3">
+                        <label for="radio-5-3">Create a copy of another table</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-container">
+                <div class="question">
+                    <span class="question-number">Q7:</span>Which of the following is a NoSQL database?
+                </div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="question-6" value="MySQL" id="radio-6-0">
+                        <label for="radio-6-0">MySQL</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="question-6" value="PostgreSQL" id="radio-6-1">
+                        <label for="radio-6-1">PostgreSQL</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="question-6" value="MongoDB" id="radio-6-2">
+                        <label for="radio-6-2">MongoDB</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="question-6" value="Oracle" id="radio-6-3">
+                        <label for="radio-6-3">Oracle</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-container">
+                <div class="question">
+                    <span class="question-number">Q8:</span>What is normalization in databases?
+                </div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="question-7" value="Increasing data redundancy" id="radio-7-0">
+                        <label for="radio-7-0">Increasing data redundancy</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="question-7" value="Converting data to lowercase" id="radio-7-1">
+                        <label for="radio-7-1">Converting data to lowercase</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="question-7" value="Organizing data to reduce redundancy" id="radio-7-2">
+                        <label for="radio-7-2">Organizing data to reduce redundancy</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="question-7" value="Formatting data into JSON" id="radio-7-3">
+                        <label for="radio-7-3">Formatting data into JSON</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-container">
+                <div class="question">
+                    <span class="question-number">Q9:</span>What is the default port for MySQL?
+                </div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="question-8" value="3306" id="radio-8-0">
+                        <label for="radio-8-0">3306</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="question-8" value="1433" id="radio-8-1">
+                        <label for="radio-8-1">1433</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="question-8" value="8080" id="radio-8-2">
+                        <label for="radio-8-2">8080</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="question-8" value="1521" id="radio-8-3">
+                        <label for="radio-8-3">1521</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-container">
+                <div class="question">
+                    <span class="question-number">Q10:</span>Which SQL clause is used to filter the results of a query?
+                </div>
+                <div class="options">
+                    <div class="option">
+                        <input type="radio" name="question-9" value="ORDER BY" id="radio-9-0">
+                        <label for="radio-9-0">ORDER BY</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="question-9" value="WHERE" id="radio-9-1">
+                        <label for="radio-9-1">WHERE</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="question-9" value="FROM" id="radio-9-2">
+                        <label for="radio-9-2">FROM</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="question-9" value="GROUP BY" id="radio-9-3">
+                        <label for="radio-9-3">GROUP BY</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="submit-section">
+            <button type="submit" id="submit-btn" onclick="submitExam()">Submit Exam</button>
+            <div id="score-display" class="score-display hidden"></div>
+        </div>
+    </div>
+    <script>
+    let questions = [];
+    let userAnswers = {};
+    let examSubmitted = false;
+    let timerInterval;
+    let timeLeft = 0;
+
+    function getQueryParam(name) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(name);
+    }
+
+    function parseDuration(durationStr) {
+        if (!durationStr) return null;
+        const minMatch = durationStr.match(/(\d+)/);
+        if (minMatch) return parseInt(minMatch[1], 10);
+        return null;
+    }
+
+    function startTimer(duration) {
+        timeLeft = duration * 60;
+        updateTimerDisplay();
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            updateTimerDisplay();
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                alert('Time is up! The exam will close.');
+                submitExam();
+            }
+        }, 1000);
+    }
+
+    function updateTimerDisplay() {
+        const min = Math.floor(timeLeft / 60);
+        const sec = timeLeft % 60;
+        document.getElementById('timer').textContent = `Time left: ${min}:${sec.toString().padStart(2, '0')}`;
+    }
+
+    function renderQuestions(questionsData) {
+        const container = document.getElementById('questions-container');
+        container.innerHTML = '';
+        container.className = '';
+
+        questionsData.forEach((q, idx) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question-container';
+            questionDiv.id = `question-${idx}`;
+
+            const questionText = document.createElement('div');
+            questionText.className = 'question';
+            questionText.innerHTML = `<span class="question-number">Q${idx + 1}:</span>${q.question}`;
+            questionDiv.appendChild(questionText);
+
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'options';
+
+            q.options.forEach((option, optIdx) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option';
+                optionDiv.id = `option-${idx}-${optIdx}`;
+
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = `question-${idx}`;
+                radio.value = option;
+                radio.id = `radio-${idx}-${optIdx}`;
+
+                const label = document.createElement('label');
+                label.htmlFor = `radio-${idx}-${optIdx}`;
+                label.textContent = option;
+
+                optionDiv.appendChild(radio);
+                optionDiv.appendChild(label);
+
+                radio.addEventListener('change', function() {
+                    userAnswers[idx] = option;
+                    updateOptionStyles(idx, optIdx);
+                });
+
+                optionsDiv.appendChild(optionDiv);
+            });
+
+            questionDiv.appendChild(optionsDiv);
+            container.appendChild(questionDiv);
+        });
+    }
+
+    function updateOptionStyles(questionIdx, selectedOptIdx) {
+        const questionContainer = document.getElementById(`question-${questionIdx}`);
+        const options = questionContainer.querySelectorAll('.option');
+        
+        // Remove previous styles
+        options.forEach(opt => {
+            opt.classList.remove('selected', 'correct', 'incorrect');
+        });
+
+        // Add selected style
+        const selectedOption = document.getElementById(`option-${questionIdx}-${selectedOptIdx}`);
+        selectedOption.classList.add('selected');
+
+        // If exam is submitted, show correct/incorrect answers
+        if (examSubmitted) {
+            const correctAnswer = questions[questionIdx].correct;
+            const selectedAnswer = userAnswers[questionIdx];
+            
+            options.forEach((opt, optIdx) => {
+                const optionText = opt.querySelector('label').textContent;
+                if (optionText === correctAnswer) {
+                    opt.classList.add('correct');
+                } else if (optionText === selectedAnswer && selectedAnswer !== correctAnswer) {
+                    opt.classList.add('incorrect');
+                }
+            });
+
+            // Update question container style
+            if (selectedAnswer === correctAnswer) {
+                questionContainer.classList.add('correct');
+                questionContainer.classList.remove('incorrect');
+            } else {
+                questionContainer.classList.add('incorrect');
+                questionContainer.classList.remove('correct');
+            }
+        }
+    }
+
+    function submitExam() {
+        console.log('Submit Exam clicked!');
+        console.log('Current userAnswers:', userAnswers);
+        console.log('Questions array:', questions);
+        
+        if (examSubmitted) {
+            console.log('Exam already submitted');
+            return;
+        }
+
+        // Check if all questions are answered
+        const unansweredQuestions = questions.length - Object.keys(userAnswers).length;
+        console.log('Unanswered questions:', unansweredQuestions);
+        
+        if (unansweredQuestions > 0) {
+            const confirmSubmit = confirm(`You have ${unansweredQuestions} unanswered question(s). Are you sure you want to submit the exam?`);
+            if (!confirmSubmit) return;
+        }
+
+        examSubmitted = true;
+        clearInterval(timerInterval);
+
+        // Calculate score
+        let correctAnswers = 0;
+        let incorrectAnswers = 0;
+        let unansweredCount = 0;
+
+        console.log('Starting score calculation...');
+
+        questions.forEach((q, idx) => {
+            const userAnswer = userAnswers[idx];
+            console.log(`Question ${idx + 1}: User answer = "${userAnswer}", Correct = "${q.correct}"`);
+            
+            if (!userAnswer) {
+                unansweredCount++;
+                console.log(`Question ${idx + 1}: Unanswered`);
+            } else if (userAnswer === q.correct) {
+                correctAnswers++;
+                console.log(`Question ${idx + 1}: Correct!`);
+            } else {
+                incorrectAnswers++;
+                console.log(`Question ${idx + 1}: Incorrect`);
+            }
+
+            // Show all correct/incorrect answers
+            const questionContainer = document.getElementById(`question-${idx}`);
+            if (questionContainer) {
+                const options = questionContainer.querySelectorAll('.option');
+                
+                options.forEach((opt, optIdx) => {
+                    const optionText = opt.querySelector('label').textContent;
+                    if (optionText === q.correct) {
+                        opt.classList.add('correct');
+                    } else if (optionText === userAnswer && userAnswer !== q.correct) {
+                        opt.classList.add('incorrect');
+                    }
+                });
+
+                // Update question container style
+                if (!userAnswer) {
+                    questionContainer.classList.add('unanswered');
+                } else if (userAnswer === q.correct) {
+                    questionContainer.classList.add('correct');
+                    questionContainer.classList.remove('incorrect', 'unanswered');
+                } else {
+                    questionContainer.classList.add('incorrect');
+                    questionContainer.classList.remove('correct', 'unanswered');
+                }
+            }
+        });
+
+        const score = (correctAnswers / questions.length) * 100;
+        console.log(`Final Score: ${correctAnswers}/${questions.length} = ${score.toFixed(1)}%`);
+        
+        // Calculate time taken
+        const totalTimeMinutes = 60 - Math.floor(timeLeft / 60);
+        const timeTaken = `${totalTimeMinutes} minutes`;
+        
+        // Prepare URL parameters for results page
+        const params = new URLSearchParams({
+            correct: correctAnswers,
+            incorrect: incorrectAnswers,
+            unanswered: unansweredCount,
+            total: questions.length,
+            examName: 'Database Quiz',
+            timeTaken: timeTaken,
+            score: score.toFixed(1),
+            grade: score >= 90 ? 'A' : score >= 80 ? 'B' : score >= 70 ? 'C' : score >= 60 ? 'D' : 'F'
+        });
+        
+        // Redirect to results page
+        window.location.href = `exam-results.html?${params.toString()}`;
+        
+        console.log('Redirecting to results page...');
+    }
+
+    // Define static questions with correct answers
+    const staticQuestions = [
+        {
+            question: "Which of the following is a type of database model?",
+            options: ["HTML", "Hierarchical", "JSON", "TCP/IP"],
+            correct: "Hierarchical"
+        },
+        {
+            question: "What is the primary key in a database?",
+            options: ["A key that opens the database", "A field that uniquely identifies a record", "A key used for sorting records", "A password to access the database"],
+            correct: "A field that uniquely identifies a record"
+        },
+        {
+            question: "Which SQL command is used to retrieve data from a database?",
+            options: ["INSERT", "UPDATE", "SELECT", "DELETE"],
+            correct: "SELECT"
+        },
+        {
+            question: "What does the acronym SQL stand for?",
+            options: ["Structured Question Language", "Strong Query Language", "Structured Query Language", "Standard Quick Language"],
+            correct: "Structured Query Language"
+        },
+        {
+            question: "Which of the following is NOT a type of SQL JOIN?",
+            options: ["INNER JOIN", "OUTER JOIN", "LEFT JOIN", "SIDE JOIN"],
+            correct: "SIDE JOIN"
+        },
+        {
+            question: "In relational databases, a foreign key is used to:",
+            options: ["Uniquely identify a table", "Represent a relationship between tables", "Encrypt the data in a table", "Create a copy of another table"],
+            correct: "Represent a relationship between tables"
+        },
+        {
+            question: "Which of the following is a NoSQL database?",
+            options: ["MySQL", "PostgreSQL", "MongoDB", "Oracle"],
+            correct: "MongoDB"
+        },
+        {
+            question: "What is normalization in databases?",
+            options: ["Increasing data redundancy", "Converting data to lowercase", "Organizing data to reduce redundancy", "Formatting data into JSON"],
+            correct: "Organizing data to reduce redundancy"
+        },
+        {
+            question: "What is the default port for MySQL?",
+            options: ["3306", "1433", "8080", "1521"],
+            correct: "3306"
+        },
+        {
+            question: "Which SQL clause is used to filter the results of a query?",
+            options: ["ORDER BY", "WHERE", "FROM", "GROUP BY"],
+            correct: "WHERE"
+        }
+    ];
+
+    // Load static questions
+    function loadQuestions() {
+        questions = staticQuestions;
+        
+        // Remove loading class and add event listeners
+        const container = document.getElementById('questions-container');
+        container.className = '';
+        
+        // Add event listeners to all radio buttons
+        const radioButtons = document.querySelectorAll('input[type="radio"]');
+        radioButtons.forEach((radio, index) => {
+            radio.addEventListener('change', function() {
+                const questionIndex = parseInt(this.name.split('-')[1]);
+                const optionIndex = parseInt(this.id.split('-')[2]);
+                userAnswers[questionIndex] = this.value;
+                updateOptionStyles(questionIndex, optionIndex);
+            });
+        });
+        
+        // Start timer (default 60 minutes if not specified)
+        const examDurationFromQuery = getQueryParam('duration');
+        const durationToUse = examDurationFromQuery ? 
+            parseDuration(decodeURIComponent(examDurationFromQuery)) : 60;
+        startTimer(durationToUse);
+    }
+
+    // Set exam title from query params if present
+    const examTitleFromQuery = getQueryParam('title');
+    if (examTitleFromQuery) {
+        document.getElementById('exam-title').textContent = decodeURIComponent(examTitleFromQuery);
+    }
+
+    // Load questions when page loads
+    loadQuestions();
+    
+    // Add direct event listener to submit button
+    document.addEventListener('DOMContentLoaded', function() {
+        const submitBtn = document.getElementById('submit-btn');
+        if (submitBtn) {
+            submitBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                console.log('Submit button clicked via event listener');
+                submitExam();
+            });
+        } else {
+            console.error('Submit button not found!');
+        }
+    });
+    </script>
+</body>
+</html> 

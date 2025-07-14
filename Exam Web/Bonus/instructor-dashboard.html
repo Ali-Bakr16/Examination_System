@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instructor Dashboard - ITI Examination System</title>
+    <link rel="stylesheet" href="dashboard-styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h2>ITI Exam System</h2>
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="nav-item active">
+                        <a href="#dashboard" class="nav-link">
+                            <i class="fas fa-home"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#create-exam" class="nav-link">
+                            <i class="fas fa-plus-circle"></i>
+                            <span>Create Exam</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#my-exams" class="nav-link">
+                            <i class="fas fa-file-alt"></i>
+                            <span>My Exams</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#results" class="nav-link">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Results</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#students" class="nav-link">
+                            <i class="fas fa-users"></i>
+                            <span>Students</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#profile" class="nav-link">
+                            <i class="fas fa-user"></i>
+                            <span>Profile</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="dashboard-header">
+                <div class="header-left">
+                    <h1>Instructor Dashboard</h1>
+                    <p>Welcome back, <span id="instructorName">Instructor</span>!</p>
+                </div>
+                <div class="header-right">
+                    <div class="user-info">
+                        <div class="user-avatar">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <div class="user-details">
+                            <span class="user-name" id="headerInstructorName">Instructor Name</span>
+                            <span class="user-role">Instructor</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div class="dashboard-content">
+                <!-- Quick Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalExams">0</h3>
+                            <p>Total Exams</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalStudents">0</h3>
+                            <p>Total Students</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="completedExams">0</h3>
+                            <p>Completed</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="averageScore">0%</h3>
+                            <p>Avg. Score</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Create Exam Section -->
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2>Create New Exam</h2>
+                        <p>Design and configure a new examination</p>
+                    </div>
+                    
+                    <div class="create-exam-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="examTitle">Exam Title</label>
+                                <input type="text" id="examTitle" placeholder="Enter exam title">
+                            </div>
+                            <div class="form-group">
+                                <label for="examSubject">Subjects</label>
+                                <select id="examSubject" multiple>
+                                    <option value="Programming">Programming</option>
+                                    <option value="Database">Database</option>
+                                    <option value="Web Development">Web Development</option>
+                                    <option value="Networking">Networking</option>
+                                    <option value="Cybersecurity">Cybersecurity</option>
+                                </select>
+                                <input type="text" id="newSubjectInput" placeholder="Add new subject">
+                                <button type="button" class="btn btn-sm btn-secondary" onclick="addSubjectOption()">Add Subject</button>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="examDuration">Duration (minutes)</label>
+                                <input type="number" id="examDuration" placeholder="60" min="15" max="180">
+                            </div>
+                            <div class="form-group">
+                                <label for="examDate">Exam Date</label>
+                                <input type="date" id="examDate">
+                            </div>
+                            <div class="form-group">
+                                <label for="examStartTime">Start Time</label>
+                                <input type="time" id="examStartTime">
+                            </div>
+                            <div class="form-group">
+                                <label for="examEndTime">End Time</label>
+                                <input type="time" id="examEndTime">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="mcqCount"># MCQ Questions</label>
+                                <input type="number" id="mcqCount" min="0" value="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="tfCount"># True/False Questions</label>
+                                <input type="number" id="tfCount" min="0" value="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="textCount"># Text Questions</label>
+                                <input type="number" id="textCount" min="0" value="0">
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn btn-secondary" onclick="clearExamForm()">Clear</button>
+                            <button class="btn btn-primary" onclick="createExam()">
+                                <i class="fas fa-plus"></i>
+                                Create Exam
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- My Exams -->
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2>My Exams</h2>
+                        <p>Exams you have created</p>
+                    </div>
+                    
+                    <div class="exams-grid" id="myExams">
+                        <!-- Exam cards will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Recent Results -->
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2>Recent Student Results</h2>
+                        <p>Latest exam performances from your students</p>
+                    </div>
+                    
+                    <div class="results-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Student Name</th>
+                                    <th>Exam</th>
+                                    <th>Score</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="studentResults">
+                                <!-- Results will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Create Question Modal -->
+    <div id="questionModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add Question</h2>
+                <button class="close-btn" onclick="closeQuestionModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="questionText">Question Text</label>
+                    <textarea id="questionText" rows="3" placeholder="Enter your question"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="questionType">Question Type</label>
+                    <select id="questionType">
+                        <option value="multiple-choice">Multiple Choice</option>
+                        <option value="true-false">True/False</option>
+                        <option value="short-answer">Short Answer</option>
+                    </select>
+                </div>
+                
+                <div id="optionsContainer" class="form-group">
+                    <label>Options</label>
+                    <div id="optionsList">
+                        <div class="option-item">
+                            <input type="text" placeholder="Option 1" class="option-input">
+                            <input type="radio" name="correct" value="0" class="correct-option">
+                            <label>Correct</label>
+                        </div>
+                        <div class="option-item">
+                            <input type="text" placeholder="Option 2" class="option-input">
+                            <input type="radio" name="correct" value="1" class="correct-option">
+                            <label>Correct</label>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-secondary" onclick="addOption()">Add Option</button>
+                </div>
+                
+                <div class="form-actions">
+                    <button class="btn btn-secondary" onclick="closeQuestionModal()">Cancel</button>
+                    <button class="btn btn-primary" onclick="saveQuestion()">Save Question</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alert Container -->
+    <div id="alertContainer" class="alert-container"></div>
+
+    <script>
+        // Instructor-specific dashboard logic
+        let currentUser = null;
+        let myExams = [];
+        let studentResults = [];
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserData();
+            loadDashboardData();
+            setupEventListeners();
+        });
+
+        function loadUserData() {
+            const userData = localStorage.getItem('iti_user_data');
+            if (userData) {
+                currentUser = JSON.parse(userData);
+                document.getElementById('instructorName').textContent = currentUser.name;
+                document.getElementById('headerInstructorName').textContent = currentUser.name;
+            } else {
+                window.location.href = 'demo.html';
+            }
+        }
+
+        function loadDashboardData() {
+            // Mock data for demonstration
+            myExams = [
+                {
+                    id: 1,
+                    title: 'JavaScript Fundamentals',
+                    subject: 'Programming',
+                    duration: '60 minutes',
+                    questions: 20,
+                    difficulty: 'Beginner',
+                    status: 'Active',
+                    studentsEnrolled: 45,
+                    averageScore: 78
+                },
+                {
+                    id: 2,
+                    title: 'Database Management',
+                    subject: 'Database',
+                    duration: '90 minutes',
+                    questions: 25,
+                    difficulty: 'Intermediate',
+                    status: 'Draft',
+                    studentsEnrolled: 0,
+                    averageScore: 0
+                },
+                {
+                    id: 3,
+                    title: 'Web Development',
+                    subject: 'Web Technologies',
+                    duration: '120 minutes',
+                    questions: 30,
+                    difficulty: 'Advanced',
+                    status: 'Active',
+                    studentsEnrolled: 32,
+                    averageScore: 85
+                }
+            ];
+
+            studentResults = [
+                {
+                    studentName: 'Ahmed Student',
+                    exam: 'JavaScript Fundamentals',
+                    score: 85,
+                    status: 'Passed',
+                    date: '2024-01-15'
+                },
+                {
+                    studentName: 'Fatima Ali',
+                    exam: 'Web Development',
+                    score: 92,
+                    status: 'Passed',
+                    date: '2024-01-14'
+                },
+                {
+                    studentName: 'Omar Hassan',
+                    exam: 'JavaScript Fundamentals',
+                    score: 65,
+                    status: 'Passed',
+                    date: '2024-01-13'
+                }
+            ];
+
+            updateDashboard();
+        }
+
+        function updateDashboard() {
+            // Update stats
+            document.getElementById('totalExams').textContent = myExams.length;
+            document.getElementById('totalStudents').textContent = myExams.reduce((sum, exam) => sum + exam.studentsEnrolled, 0);
+            document.getElementById('completedExams').textContent = myExams.filter(exam => exam.status === 'Active').length;
+            
+            const activeExams = myExams.filter(exam => exam.status === 'Active' && exam.averageScore > 0);
+            const averageScore = activeExams.length > 0 
+                ? Math.round(activeExams.reduce((sum, exam) => sum + exam.averageScore, 0) / activeExams.length)
+                : 0;
+            document.getElementById('averageScore').textContent = averageScore + '%';
+
+            // Update my exams
+            const examsContainer = document.getElementById('myExams');
+            examsContainer.innerHTML = '';
+
+            myExams.forEach(exam => {
+                const examCard = createExamCard(exam);
+                examsContainer.appendChild(examCard);
+            });
+
+            // Update student results
+            const resultsContainer = document.getElementById('studentResults');
+            resultsContainer.innerHTML = '';
+
+            studentResults.forEach(result => {
+                const resultRow = createResultRow(result);
+                resultsContainer.appendChild(resultRow);
+            });
+        }
+
+        function createExamCard(exam) {
+            const card = document.createElement('div');
+            card.className = 'exam-card';
+            card.innerHTML = `
+                <div class="exam-card-header">
+                    <h3>${exam.title}</h3>
+                    <span class="status ${exam.status.toLowerCase()}">${exam.status}</span>
+                </div>
+                <div class="exam-card-body">
+                    <div class="exam-details">
+                        <div class="detail-item">
+                            <i class="fas fa-book"></i>
+                            <span>${exam.subject}</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-clock"></i>
+                            <span>${exam.duration}</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-question-circle"></i>
+                            <span>${exam.questions} questions</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-users"></i>
+                            <span>${exam.studentsEnrolled} students</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-star"></i>
+                            <span>${exam.averageScore}% avg score</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="exam-card-footer">
+                    <button class="btn btn-secondary" onclick="editExam(${exam.id})">
+                        <i class="fas fa-edit"></i>
+                        Edit
+                    </button>
+                    <button class="btn btn-primary" onclick="viewResults(${exam.id})">
+                        <i class="fas fa-chart-bar"></i>
+                        Results
+                    </button>
+                </div>
+            `;
+            return card;
+        }
+
+        function createResultRow(result) {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${result.studentName}</td>
+                <td>${result.exam}</td>
+                <td>
+                    <span class="score ${result.score >= 80 ? 'high' : result.score >= 60 ? 'medium' : 'low'}">
+                        ${result.score}%
+                    </span>
+                </td>
+                <td>
+                    <span class="status ${result.status.toLowerCase()}">${result.status}</span>
+                </td>
+                <td>${new Date(result.date).toLocaleDateString()}</td>
+                <td>
+                    <button class="btn btn-sm btn-primary" onclick="viewStudentDetail('${result.studentName}')">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </td>
+            `;
+            return row;
+        }
+
+        function createExam() {
+            const title = document.getElementById('examTitle').value;
+            const subjectSelect = document.getElementById('examSubject');
+            const subjects = Array.from(subjectSelect.selectedOptions).map(opt => opt.value);
+            const duration = document.getElementById('examDuration').value;
+            const examDate = document.getElementById('examDate').value;
+            const startTime = document.getElementById('examStartTime').value;
+            const endTime = document.getElementById('examEndTime').value;
+            const mcqCount = parseInt(document.getElementById('mcqCount').value) || 0;
+            const tfCount = parseInt(document.getElementById('tfCount').value) || 0;
+            const textCount = parseInt(document.getElementById('textCount').value) || 0;
+            if (!title || subjects.length === 0 || !duration || !examDate || !startTime || !endTime) {
+                showAlert('Please fill in all required fields', 'error');
+                return;
+            }
+            const newExam = {
+                id: myExams.length + 1,
+                title: title,
+                subjects: subjects,
+                duration: duration + ' minutes',
+                examDate: examDate,
+                startTime: startTime,
+                endTime: endTime,
+                mcqCount: mcqCount,
+                tfCount: tfCount,
+                textCount: textCount,
+                questions: mcqCount + tfCount + textCount,
+                status: 'Draft',
+                studentsEnrolled: 0,
+                averageScore: 0
+            };
+            myExams.push(newExam);
+            // Save to localStorage for student dashboard
+            localStorage.setItem('iti_exams', JSON.stringify(myExams));
+            updateDashboard();
+            clearExamForm();
+            showAlert('Exam created successfully!', 'success');
+        }
+
+        function clearExamForm() {
+            document.getElementById('examTitle').value = '';
+            const subjectSelect = document.getElementById('examSubject');
+            Array.from(subjectSelect.options).forEach(opt => opt.selected = false);
+            document.getElementById('examDuration').value = '';
+            document.getElementById('examDate').value = '';
+            document.getElementById('examStartTime').value = '';
+            document.getElementById('examEndTime').value = '';
+            document.getElementById('mcqCount').value = 0;
+            document.getElementById('tfCount').value = 0;
+            document.getElementById('textCount').value = 0;
+            document.getElementById('newSubjectInput').value = '';
+        }
+
+        function editExam(examId) {
+            showAlert(`Editing exam ${examId} - This would open the exam editor`, 'info');
+        }
+
+        function viewResults(examId) {
+            showAlert(`Viewing results for exam ${examId} - This would show detailed results`, 'info');
+        }
+
+        function viewStudentDetail(studentName) {
+            showAlert(`Viewing details for ${studentName} - This would show student profile`, 'info');
+        }
+
+        function openQuestionModal() {
+            document.getElementById('questionModal').style.display = 'flex';
+        }
+
+        function closeQuestionModal() {
+            document.getElementById('questionModal').style.display = 'none';
+        }
+
+        function addOption() {
+            const optionsList = document.getElementById('optionsList');
+            const optionCount = optionsList.children.length;
+            const newOption = document.createElement('div');
+            newOption.className = 'option-item';
+            newOption.innerHTML = `
+                <input type="text" placeholder="Option ${optionCount + 1}" class="option-input">
+                <input type="radio" name="correct" value="${optionCount}" class="correct-option">
+                <label>Correct</label>
+                <button type="button" class="btn btn-sm btn-danger" onclick="removeOption(this)">
+                    <i class="fas fa-trash"></i>
+                </button>
+            `;
+            optionsList.appendChild(newOption);
+        }
+
+        function removeOption(button) {
+            button.parentElement.remove();
+        }
+
+        function saveQuestion() {
+            const questionText = document.getElementById('questionText').value;
+            const questionType = document.getElementById('questionType').value;
+
+            if (!questionText) {
+                showAlert('Please enter question text', 'error');
+                return;
+            }
+
+            showAlert('Question saved successfully!', 'success');
+            closeQuestionModal();
+        }
+
+        function setupEventListeners() {
+            // Navigation
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = this.getAttribute('href').substring(1);
+                    navigateToSection(target);
+                });
+            });
+
+            // Question type change
+            document.getElementById('questionType').addEventListener('change', function() {
+                const optionsContainer = document.getElementById('optionsContainer');
+                if (this.value === 'multiple-choice') {
+                    optionsContainer.style.display = 'block';
+                } else {
+                    optionsContainer.style.display = 'none';
+                }
+            });
+        }
+
+        function navigateToSection(section) {
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            const activeLink = document.querySelector(`[href="#${section}"]`);
+            if (activeLink) {
+                activeLink.parentElement.classList.add('active');
+            }
+
+            showSectionContent(section);
+        }
+
+        function showSectionContent(section) {
+            showAlert(`Navigating to ${section} section`, 'info');
+        }
+
+        function logout() {
+            localStorage.removeItem('iti_user_data');
+            localStorage.removeItem('iti_auth_token');
+            localStorage.removeItem('iti_user_role');
+            window.location.href = 'demo.html';
+        }
+
+        function showAlert(message, type = 'info') {
+            const alertContainer = document.getElementById('alertContainer');
+            const alertElement = document.createElement('div');
+            alertElement.className = `alert ${type}`;
+            
+            const iconMap = {
+                success: 'fas fa-check-circle',
+                error: 'fas fa-exclamation-circle',
+                warning: 'fas fa-exclamation-triangle',
+                info: 'fas fa-info-circle'
+            };
+            
+            alertElement.innerHTML = `
+                <i class="${iconMap[type] || iconMap.info}"></i>
+                <span>${message}</span>
+                <button class="alert-close" onclick="this.parentElement.remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            alertContainer.appendChild(alertElement);
+            
+            setTimeout(() => {
+                if (alertElement.parentElement) {
+                    alertElement.remove();
+                }
+            }, 5000);
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('questionModal');
+            if (event.target === modal) {
+                closeQuestionModal();
+            }
+        }
+
+        function addSubjectOption() {
+            const input = document.getElementById('newSubjectInput');
+            const value = input.value.trim();
+            if (value) {
+                const select = document.getElementById('examSubject');
+                const option = document.createElement('option');
+                option.value = value;
+                option.textContent = value;
+                select.appendChild(option);
+                input.value = '';
+            }
+        }
+    </script>
+</body>
+</html> 

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Results</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 0; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .results-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+        }
+        
+        .header {
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 1.1em;
+            margin: 0;
+        }
+        
+        .score-section {
+            margin-bottom: 30px;
+        }
+        
+        .grade-display {
+            font-size: 4em;
+            font-weight: bold;
+            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .grade-a { color: #28a745; }
+        .grade-b { color: #17a2b8; }
+        .grade-c { color: #ffc107; }
+        .grade-d { color: #fd7e14; }
+        .grade-f { color: #dc3545; }
+        
+        .percentage {
+            font-size: 2em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .message {
+            font-size: 1.2em;
+            font-style: italic;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid;
+        }
+        
+        .stat-card.correct {
+            border-left-color: #28a745;
+            background: #d4edda;
+        }
+        
+        .stat-card.incorrect {
+            border-left-color: #dc3545;
+            background: #f8d7da;
+        }
+        
+        .stat-card.unanswered {
+            border-left-color: #ffc107;
+            background: #fff3cd;
+        }
+        
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .total-questions {
+            background: #e9ecef;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .total-questions strong {
+            color: #333;
+            font-size: 1.1em;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #545b62;
+            transform: translateY(-2px);
+        }
+        
+        .exam-details {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+        
+        .exam-details h3 {
+            margin-top: 0;
+            color: #333;
+            border-bottom: 2px solid #dee2e6;
+            padding-bottom: 10px;
+        }
+        
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 5px 0;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            color: #666;
+        }
+        
+        .detail-value {
+            color: #333;
+        }
+        
+        @media (max-width: 768px) {
+            .results-container {
+                padding: 20px;
+                margin: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .grade-display {
+                font-size: 3em;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="results-container">
+        <div class="header">
+            <h1>📊 Exam Results</h1>
+            <p>Your performance summary</p>
+        </div>
+        
+        <div class="score-section">
+            <div id="grade-display" class="grade-display grade-a">A</div>
+            <div id="percentage" class="percentage">95.0%</div>
+            <div id="message" class="message">Excellent! Outstanding performance!</div>
+        </div>
+        
+        <div class="stats-grid">
+            <div id="correct-card" class="stat-card correct">
+                <div id="correct-number" class="stat-number">9</div>
+                <div class="stat-label">✅ Correct</div>
+            </div>
+            <div id="incorrect-card" class="stat-card incorrect">
+                <div id="incorrect-number" class="stat-number">1</div>
+                <div class="stat-label">❌ Incorrect</div>
+            </div>
+            <div id="unanswered-card" class="stat-card unanswered" style="display: none;">
+                <div id="unanswered-number" class="stat-number">0</div>
+                <div class="stat-label">⏭️ Unanswered</div>
+            </div>
+        </div>
+        
+        <div class="total-questions">
+            <strong>Total Questions: <span id="total-questions">10</span></strong>
+        </div>
+        
+        <div class="exam-details">
+            <h3>📝 Exam Details</h3>
+            <div class="detail-row">
+                <span class="detail-label">Exam Name:</span>
+                <span class="detail-value" id="exam-name">Database Quiz</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Date:</span>
+                <span class="detail-value" id="exam-date">Today</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Time Taken:</span>
+                <span class="detail-value" id="time-taken">25 minutes</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Status:</span>
+                <span class="detail-value" id="exam-status">Completed</span>
+            </div>
+        </div>
+        
+        <div class="action-buttons">
+            <a href="student-dashboard.html" class="btn btn-primary">🏠 Return to Dashboard</a>
+            <button onclick="window.print()" class="btn btn-secondary">🖨️ Print Results</button>
+        </div>
+    </div>
+
+    <script>
+        // Get results from URL parameters
+        function getQueryParam(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+        
+        // Load results from URL parameters
+        function loadResults() {
+            const correct = parseInt(getQueryParam('correct') || '0');
+            const incorrect = parseInt(getQueryParam('incorrect') || '0');
+            const unanswered = parseInt(getQueryParam('unanswered') || '0');
+            const total = parseInt(getQueryParam('total') || '10');
+            const examName = getQueryParam('examName') || 'Database Quiz';
+            const timeTaken = getQueryParam('timeTaken') || '25 minutes';
+            
+            // Calculate percentage
+            const percentage = (correct / total) * 100;
+            
+            // Determine grade and message
+            let grade = '';
+            let message = '';
+            let gradeClass = '';
+            
+            if (percentage >= 90) {
+                grade = 'A';
+                message = 'Excellent! Outstanding performance!';
+                gradeClass = 'grade-a';
+            } else if (percentage >= 80) {
+                grade = 'B';
+                message = 'Very good! Well done!';
+                gradeClass = 'grade-b';
+            } else if (percentage >= 70) {
+                grade = 'C';
+                message = 'Good! You passed the exam.';
+                gradeClass = 'grade-c';
+            } else if (percentage >= 60) {
+                grade = 'D';
+                message = 'Fair. You need more practice.';
+                gradeClass = 'grade-d';
+            } else {
+                grade = 'F';
+                message = 'Failed. Please review the material and try again.';
+                gradeClass = 'grade-f';
+            }
+            
+            // Update the display
+            document.getElementById('grade-display').textContent = grade;
+            document.getElementById('grade-display').className = `grade-display ${gradeClass}`;
+            document.getElementById('percentage').textContent = `${percentage.toFixed(1)}%`;
+            document.getElementById('message').textContent = message;
+            
+            document.getElementById('correct-number').textContent = correct;
+            document.getElementById('incorrect-number').textContent = incorrect;
+            document.getElementById('total-questions').textContent = total;
+            
+            // Show unanswered card only if there are unanswered questions
+            if (unanswered > 0) {
+                document.getElementById('unanswered-card').style.display = 'block';
+                document.getElementById('unanswered-number').textContent = unanswered;
+            }
+            
+            // Update exam details
+            document.getElementById('exam-name').textContent = examName;
+            document.getElementById('exam-date').textContent = new Date().toLocaleDateString();
+            document.getElementById('time-taken').textContent = timeTaken;
+            document.getElementById('exam-status').textContent = percentage >= 70 ? 'Passed' : 'Failed';
+        }
+        
+        // Load results when page loads
+        document.addEventListener('DOMContentLoaded', loadResults);
+    </script>
+</body>
+</html> 

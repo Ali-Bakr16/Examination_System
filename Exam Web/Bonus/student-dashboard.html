@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - ITI Examination System</title>
+    <link rel="stylesheet" href="dashboard-styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h2>ITI Exam System</h2>
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="nav-item active">
+                        <a href="#dashboard" class="nav-link">
+                            <i class="fas fa-home"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#exams" class="nav-link">
+                            <i class="fas fa-file-alt"></i>
+                            <span>My Exams</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#results" class="nav-link">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Results</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#profile" class="nav-link">
+                            <i class="fas fa-user"></i>
+                            <span>Profile</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="dashboard-header">
+                <div class="header-left">
+                    <h1>Student Dashboard</h1>
+                    <p>Welcome back, <span id="studentName">Student</span>!</p>
+                </div>
+                <div class="header-right">
+                    <div class="user-info">
+                        <div class="user-avatar">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <div class="user-details">
+                            <span class="user-name" id="headerStudentName">Student Name</span>
+                            <span class="user-role">Student</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div class="dashboard-content">
+                <!-- Quick Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalExams">0</h3>
+                            <p>Total Exams</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="completedExams">0</h3>
+                            <p>Completed</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="pendingExams">0</h3>
+                            <p>Pending</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="averageScore">0%</h3>
+                            <p>Average Score</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Available Exams -->
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2>Available Exams</h2>
+                        <p>Exams you can take right now</p>
+                    </div>
+                    
+                    <div class="exams-grid" id="availableExams">
+                        <!-- Exam cards will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Recent Results -->
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2>Recent Results</h2>
+                        <p>Your latest exam performances</p>
+                    </div>
+                    
+                    <div class="results-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Exam Name</th>
+                                    <th>Subject</th>
+                                    <th>Score</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentResults">
+                                <!-- Results will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Exam Modal -->
+    <div id="examModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="examTitle">Exam Title</h2>
+                <button class="close-btn" onclick="closeExamModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="exam-info">
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <span>Duration: <span id="examDuration">60 minutes</span></span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-question-circle"></i>
+                        <span>Questions: <span id="examQuestions">20</span></span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Instructions: Read all questions carefully before answering</span>
+                    </div>
+                </div>
+                
+                <div class="exam-actions">
+                    <button class="btn btn-secondary" onclick="closeExamModal()">Cancel</button>
+                    <button class="btn btn-primary" onclick="startExam()">Start Exam</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alert Container -->
+    <div id="alertContainer" class="alert-container"></div>
+
+    <script src="dashboard-script.js"></script>
+    <script>
+        // Student-specific dashboard logic
+        let currentUser = null;
+        let availableExams = [];
+        let recentResults = [];
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserData();
+            loadDashboardData();
+            setupEventListeners();
+        });
+
+        function loadUserData() {
+            // Get user data from localStorage (set during login)
+            const userData = localStorage.getItem('iti_user_data');
+            if (userData) {
+                currentUser = JSON.parse(userData);
+                document.getElementById('studentName').textContent = currentUser.name;
+                document.getElementById('headerStudentName').textContent = currentUser.name;
+            } else {
+                // Redirect to login if no user data
+                window.location.href = 'demo.html';
+            }
+        }
+
+        function loadDashboardData() {
+            // Load exams from localStorage (created by instructor)
+            const storedExams = localStorage.getItem('iti_exams');
+            if (storedExams) {
+                availableExams = JSON.parse(storedExams).map(exam => ({
+                    id: exam.id,
+                    title: exam.title,
+                    subjects: exam.subjects,
+                    duration: exam.duration,
+                    questions: exam.questions,
+                    mcqCount: exam.mcqCount,
+                    tfCount: exam.tfCount,
+                    textCount: exam.textCount,
+                    examDate: exam.examDate,
+                    startTime: exam.startTime,
+                    endTime: exam.endTime,
+                    instructor: currentUser ? currentUser.name : 'Instructor'
+                }));
+            } else {
+                availableExams = [];
+            }
+
+            recentResults = [
+                {
+                    examName: 'HTML & CSS Basics',
+                    subject: 'Web Design',
+                    score: 85,
+                    status: 'Passed',
+                    date: '2024-01-15'
+                },
+                {
+                    examName: 'Python Programming',
+                    subject: 'Programming',
+                    score: 92,
+                    status: 'Passed',
+                    date: '2024-01-10'
+                },
+                {
+                    examName: 'Data Structures',
+                    subject: 'Computer Science',
+                    score: 78,
+                    status: 'Passed',
+                    date: '2024-01-05'
+                }
+            ];
+
+            updateDashboard();
+        }
+
+        function updateDashboard() {
+            // Update stats
+            document.getElementById('totalExams').textContent = availableExams.length + recentResults.length;
+            document.getElementById('completedExams').textContent = recentResults.length;
+            document.getElementById('pendingExams').textContent = availableExams.length;
+            
+            const averageScore = recentResults.length > 0 
+                ? Math.round(recentResults.reduce((sum, result) => sum + result.score, 0) / recentResults.length)
+                : 0;
+            document.getElementById('averageScore').textContent = averageScore + '%';
+
+            // Update available exams
+            const examsContainer = document.getElementById('availableExams');
+            examsContainer.innerHTML = '';
+
+            availableExams.forEach(exam => {
+                const examCard = createExamCard(exam);
+                examsContainer.appendChild(examCard);
+            });
+
+            // Update recent results
+            const resultsContainer = document.getElementById('recentResults');
+            resultsContainer.innerHTML = '';
+
+            recentResults.forEach(result => {
+                const resultRow = createResultRow(result);
+                resultsContainer.appendChild(resultRow);
+            });
+        }
+
+        function createExamCard(exam) {
+            const card = document.createElement('div');
+            card.className = 'exam-card';
+            card.innerHTML = `
+                <div class="exam-card-header">
+                    <h3>${exam.title}</h3>
+                </div>
+                <div class="exam-card-body">
+                    <div class="exam-details">
+                        <div class="detail-item">
+                            <i class="fas fa-book"></i>
+                            <span>${Array.isArray(exam.subjects) ? exam.subjects.join(', ') : exam.subjects}</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-clock"></i>
+                            <span>${exam.duration}</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-question-circle"></i>
+                            <span>${exam.questions} questions (MCQ: ${exam.mcqCount}, TF: ${exam.tfCount}, Text: ${exam.textCount})</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Start: ${exam.startDate} | End: ${exam.endDate}</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-user-tie"></i>
+                            <span>${exam.instructor}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="exam-card-footer">
+                    <button class="btn btn-primary" onclick="openExamModal(${exam.id})">
+                        <i class="fas fa-play"></i>
+                        Start Exam
+                    </button>
+                </div>
+            `;
+            return card;
+        }
+
+        function createResultRow(result) {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${result.examName}</td>
+                <td>${result.subject}</td>
+                <td>
+                    <span class="score ${result.score >= 80 ? 'high' : result.score >= 60 ? 'medium' : 'low'}">
+                        ${result.score}%
+                    </span>
+                </td>
+                <td>
+                    <span class="status ${result.status.toLowerCase()}">${result.status}</span>
+                </td>
+                <td>${new Date(result.date).toLocaleDateString()}</td>
+            `;
+            return row;
+        }
+
+        function openExamModal(examId) {
+            const exam = availableExams.find(e => e.id === examId);
+            if (exam) {
+                document.getElementById('examTitle').textContent = exam.title;
+                document.getElementById('examDuration').textContent = exam.duration;
+                document.getElementById('examQuestions').textContent = `${exam.questions} (MCQ: ${exam.mcqCount}, TF: ${exam.tfCount}, Text: ${exam.textCount})`;
+                document.getElementById('examModal').style.display = 'flex';
+            }
+        }
+
+        function closeExamModal() {
+            document.getElementById('examModal').style.display = 'none';
+        }
+
+        function startExam() {
+            closeExamModal();
+            showAlert('Redirecting to exam page...', 'success');
+            // Find the currently selected exam's id, title, and duration
+            const examTitle = document.getElementById('examTitle').textContent;
+            const examDuration = document.getElementById('examDuration').textContent;
+            const exam = availableExams.find(e => e.title === examTitle);
+            if (exam) {
+                // Pass title and duration as query params
+                const url = `exam.html?exam_id=${exam.id}&title=${encodeURIComponent(exam.title)}&duration=${encodeURIComponent(exam.duration)}`;
+                setTimeout(() => {
+                    window.location.href = url;
+                }, 1000);
+            } else {
+                showAlert('Exam not found!', 'error');
+            }
+        }
+
+        function setupEventListeners() {
+            // Navigation
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = this.getAttribute('href').substring(1);
+                    navigateToSection(target);
+                });
+            });
+        }
+
+        function navigateToSection(section) {
+            // Remove active class from all nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Add active class to clicked item
+            const activeLink = document.querySelector(`[href="#${section}"]`);
+            if (activeLink) {
+                activeLink.parentElement.classList.add('active');
+            }
+
+            // Show appropriate content based on section
+            showSectionContent(section);
+        }
+
+        function showSectionContent(section) {
+            // This would show different content based on the section
+            showAlert(`Navigating to ${section} section`, 'info');
+        }
+
+        function logout() {
+            // Clear user data
+            localStorage.removeItem('iti_user_data');
+            localStorage.removeItem('iti_auth_token');
+            localStorage.removeItem('iti_user_role');
+            
+            // Redirect to login
+            window.location.href = 'demo.html';
+        }
+
+        function showAlert(message, type = 'info') {
+            const alertContainer = document.getElementById('alertContainer');
+            const alertElement = document.createElement('div');
+            alertElement.className = `alert ${type}`;
+            
+            const iconMap = {
+                success: 'fas fa-check-circle',
+                error: 'fas fa-exclamation-circle',
+                warning: 'fas fa-exclamation-triangle',
+                info: 'fas fa-info-circle'
+            };
+            
+            alertElement.innerHTML = `
+                <i class="${iconMap[type] || iconMap.info}"></i>
+                <span>${message}</span>
+                <button class="alert-close" onclick="this.parentElement.remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            alertContainer.appendChild(alertElement);
+            
+            setTimeout(() => {
+                if (alertElement.parentElement) {
+                    alertElement.remove();
+                }
+            }, 5000);
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('examModal');
+            if (event.target === modal) {
+                closeExamModal();
+            }
+        }
+    </script>
+</body>
+</html> 

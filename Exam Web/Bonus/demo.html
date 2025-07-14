@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITI Examination System - Demo Sign In</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h1>Welcome in ITI Examination System</h1>
+                </div>
+                <p class="subtitle">Secure Online Examination Platform</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="signin-container">
+                <div class="signin-card">
+                    <div class="card-header">
+                        <h2>Sign In</h2>
+                        <p>Choose your role and enter your credentials</p>
+                    </div>
+
+                    <form id="signinForm" class="signin-form">
+                        <!-- Role Selection -->
+                        <div class="role-selection">
+                            <h3>Select Your Role</h3>
+                            <div class="role-options">
+                                <div class="role-option" data-role="student">
+                                    <div class="role-icon">
+                                        <i class="fas fa-user-graduate"></i>
+                                    </div>
+                                    <span>Student</span>
+                                </div>
+                                <div class="role-option" data-role="instructor">
+                                    <div class="role-icon">
+                                        <i class="fas fa-chalkboard-teacher"></i>
+                                    </div>
+                                    <span>Instructor</span>
+                                </div>
+                                <div class="role-option" data-role="training-manager">
+                                    <div class="role-icon">
+                                        <i class="fas fa-user-tie"></i>
+                                    </div>
+                                    <span>Training Manager</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Form Fields -->
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <div class="input-group">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="email" name="email" required placeholder="Enter your email">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <div class="input-group">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="password" name="password" required placeholder="Enter your password">
+                                <button type="button" class="toggle-password" id="togglePassword">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-options">
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="rememberMe" name="rememberMe">
+                                <span class="checkmark"></span>
+                                Remember me
+                            </label>
+                            <a href="#" class="forgot-password">Forgot Password?</a>
+                        </div>
+
+                        <button type="submit" class="signin-btn" id="signinBtn">
+                            <span class="btn-text">Sign In</span>
+                            <span class="btn-loader" style="display: none;">
+                                <i class="fas fa-spinner fa-spin"></i>
+                            </span>
+                        </button>
+                    </form>
+
+                    <div class="signin-footer">
+                        <p>Don't have an account? <a href="#" class="register-link">Contact Administrator</a></p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Alert Messages -->
+        <div id="alertContainer" class="alert-container"></div>
+    </div>
+
+    <script>
+        // Demo JavaScript - Mock Authentication
+        const signinForm = document.getElementById('signinForm');
+        const roleOptions = document.querySelectorAll('.role-option');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const togglePasswordBtn = document.getElementById('togglePassword');
+        const signinBtn = document.getElementById('signinBtn');
+        const alertContainer = document.getElementById('alertContainer');
+
+        let selectedRole = null;
+        let isAuthenticating = false;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeEventListeners();
+            loadSavedCredentials();
+        });
+
+        function initializeEventListeners() {
+            roleOptions.forEach(option => {
+                option.addEventListener('click', () => selectRole(option));
+            });
+
+            signinForm.addEventListener('submit', handleSignIn);
+            togglePasswordBtn.addEventListener('click', togglePasswordVisibility);
+            emailInput.addEventListener('input', validateEmail);
+            passwordInput.addEventListener('input', validatePassword);
+            emailInput.addEventListener('blur', validateEmail);
+            passwordInput.addEventListener('blur', validatePassword);
+        }
+
+        function selectRole(selectedOption) {
+            roleOptions.forEach(option => {
+                option.classList.remove('selected');
+            });
+
+            selectedOption.classList.add('selected');
+            selectedRole = selectedOption.dataset.role;
+            validateForm();
+            showAlert(`Selected role: ${selectedOption.querySelector('span').textContent}`, 'success');
+        }
+
+        function togglePasswordVisibility() {
+            const type = passwordInput.type === 'password' ? 'text' : 'password';
+            passwordInput.type = type;
+            
+            const icon = togglePasswordBtn.querySelector('i');
+            icon.className = type === 'password' ? 'fas fa-eye' : 'fas fa-eye-slash';
+        }
+
+        function validateEmail() {
+            const email = emailInput.value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (!email) {
+                showFieldError(emailInput, 'Email is required');
+                return false;
+            } else if (!emailRegex.test(email)) {
+                showFieldError(emailInput, 'Please enter a valid email address');
+                return false;
+            } else {
+                clearFieldError(emailInput);
+                return true;
+            }
+        }
+
+        function validatePassword() {
+            const password = passwordInput.value;
+            
+            if (!password) {
+                showFieldError(passwordInput, 'Password is required');
+                return false;
+            } else if (password.length < 6) {
+                showFieldError(passwordInput, 'Password must be at least 6 characters');
+                return false;
+            } else {
+                clearFieldError(passwordInput);
+                return true;
+            }
+        }
+
+        function validateForm() {
+            const isEmailValid = validateEmail();
+            const isPasswordValid = validatePassword();
+            const isRoleSelected = selectedRole !== null;
+            
+            signinBtn.disabled = !(isEmailValid && isPasswordValid && isRoleSelected);
+            return isEmailValid && isPasswordValid && isRoleSelected;
+        }
+
+        function showFieldError(input, message) {
+            const inputGroup = input.closest('.input-group');
+            const existingError = inputGroup.querySelector('.field-error');
+            
+            if (!existingError) {
+                const errorElement = document.createElement('div');
+                errorElement.className = 'field-error';
+                errorElement.textContent = message;
+                errorElement.style.cssText = `
+                    color: #dc3545;
+                    font-size: 0.8rem;
+                    margin-top: 5px;
+                    animation: fadeIn 0.3s ease;
+                `;
+                inputGroup.appendChild(errorElement);
+            }
+            
+            input.style.borderColor = '#dc3545';
+        }
+
+        function clearFieldError(input) {
+            const inputGroup = input.closest('.input-group');
+            const errorElement = inputGroup.querySelector('.field-error');
+            
+            if (errorElement) {
+                errorElement.remove();
+            }
+            
+            input.style.borderColor = '#e1e5e9';
+        }
+
+        async function handleSignIn(event) {
+            event.preventDefault();
+            
+            if (!validateForm()) {
+                showAlert('Please fill in all required fields correctly', 'error');
+                return;
+            }
+            
+            if (isAuthenticating) return;
+            
+            const formData = {
+                email: emailInput.value.trim(),
+                password: passwordInput.value,
+                role: selectedRole,
+                rememberMe: document.getElementById('rememberMe').checked
+            };
+            
+            setLoadingState(true);
+            
+            try {
+                const response = await authenticateUser(formData);
+                
+                if (response.success) {
+                    if (formData.rememberMe) {
+                        saveCredentials(formData.email, formData.role);
+                    } else {
+                        clearSavedCredentials();
+                    }
+                    
+                    showAlert('Sign in successful! Redirecting...', 'success');
+                    
+                    setTimeout(() => {
+                        redirectToDashboard(response.user, response.role);
+                    }, 1500);
+                    
+                } else {
+                    showAlert(response.message || 'Authentication failed', 'error');
+                }
+                
+            } catch (error) {
+                console.error('Authentication error:', error);
+                showAlert('An error occurred during sign in. Please try again.', 'error');
+            } finally {
+                setLoadingState(false);
+            }
+        }
+
+        async function authenticateUser(credentials) {
+            try {
+                const response = await fetch('http://localhost:5000/api/auth/signin', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(credentials)
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Store token in localStorage
+                    localStorage.setItem('iti_auth_token', data.token);
+                    localStorage.setItem('iti_user_role', data.role);
+                }
+                
+                return data;
+            } catch (error) {
+                console.error('API call failed:', error);
+                return {
+                    success: false,
+                    message: 'Network error. Please check your connection and try again.'
+                };
+            }
+        }
+
+        function setLoadingState(loading) {
+            isAuthenticating = loading;
+            signinBtn.disabled = loading;
+            
+            if (loading) {
+                signinBtn.classList.add('loading');
+            } else {
+                signinBtn.classList.remove('loading');
+            }
+        }
+
+        function showAlert(message, type = 'info') {
+            const alertElement = document.createElement('div');
+            alertElement.className = `alert ${type}`;
+            
+            const iconMap = {
+                success: 'fas fa-check-circle',
+                error: 'fas fa-exclamation-circle',
+                warning: 'fas fa-exclamation-triangle',
+                info: 'fas fa-info-circle'
+            };
+            
+            alertElement.innerHTML = `
+                <i class="${iconMap[type] || iconMap.info}"></i>
+                <span>${message}</span>
+                <button class="alert-close" onclick="this.parentElement.remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            alertContainer.appendChild(alertElement);
+            
+            setTimeout(() => {
+                if (alertElement.parentElement) {
+                    alertElement.remove();
+                }
+            }, 5000);
+        }
+
+        function redirectToDashboard(user, role) {
+            // Store user data for dashboard access
+            localStorage.setItem('iti_user_data', JSON.stringify(user));
+            
+            const dashboards = {
+                student: 'student-dashboard.html',
+                instructor: 'instructor-dashboard.html',
+                'training-manager': 'manager-dashboard.html'
+            };
+            
+            const dashboardUrl = dashboards[role];
+            if (dashboardUrl) {
+                showAlert(`Welcome ${user.name}! Redirecting to ${role} dashboard...`, 'success');
+                setTimeout(() => {
+                    window.location.href = dashboardUrl;
+                }, 1500);
+            } else {
+                showAlert('Invalid role detected', 'error');
+            }
+        }
+
+        function saveCredentials(email, role) {
+            try {
+                localStorage.setItem('iti_remembered_email', email);
+                localStorage.setItem('iti_remembered_role', role);
+            } catch (error) {
+                console.error('Failed to save credentials:', error);
+            }
+        }
+
+        function loadSavedCredentials() {
+            try {
+                const savedEmail = localStorage.getItem('iti_remembered_email');
+                const savedRole = localStorage.getItem('iti_remembered_role');
+                
+                if (savedEmail && savedRole) {
+                    emailInput.value = savedEmail;
+                    document.getElementById('rememberMe').checked = true;
+                    
+                    const roleOption = document.querySelector(`[data-role="${savedRole}"]`);
+                    if (roleOption) {
+                        selectRole(roleOption);
+                    }
+                }
+            } catch (error) {
+                console.error('Failed to load saved credentials:', error);
+            }
+        }
+
+        function clearSavedCredentials() {
+            try {
+                localStorage.removeItem('iti_remembered_email');
+                localStorage.removeItem('iti_remembered_role');
+            } catch (error) {
+                console.error('Failed to clear saved credentials:', error);
+            }
+        }
+
+        // Add fadeIn animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(-10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            
+            .demo-notice {
+                background: #e3f2fd;
+                border: 1px solid #2196f3;
+                border-radius: 8px;
+                padding: 10px;
+                margin-top: 15px;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                color: #1976d2;
+                font-size: 0.9rem;
+            }
+            
+            .demo-credentials {
+                margin-top: 30px;
+                padding: 20px;
+                background: #f8f9fa;
+                border-radius: 12px;
+                border: 1px solid #e1e5e9;
+            }
+            
+            .demo-credentials h4 {
+                margin-bottom: 15px;
+                color: #333;
+                font-size: 1rem;
+            }
+            
+            .credential-list {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .credential-item {
+                font-size: 0.9rem;
+                color: #666;
+                padding: 8px 12px;
+                background: white;
+                border-radius: 6px;
+                border: 1px solid #e1e5e9;
+            }
+            
+            .credential-item strong {
+                color: #333;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html> 

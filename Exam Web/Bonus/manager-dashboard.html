@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training Manager Dashboard - ITI Examination System</title>
+    <link rel="stylesheet" href="dashboard-styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h2>ITI Exam System</h2>
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="nav-item active">
+                        <a href="#dashboard" class="nav-link">
+                            <i class="fas fa-home"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#students" class="nav-link">
+                            <i class="fas fa-user-graduate"></i>
+                            <span>Students</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#instructors" class="nav-link">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                            <span>Instructors</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#exams" class="nav-link">
+                            <i class="fas fa-file-alt"></i>
+                            <span>All Exams</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#reports" class="nav-link">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Reports</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#settings" class="nav-link">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="dashboard-header">
+                <div class="header-left">
+                    <h1>Training Manager Dashboard</h1>
+                    <p>Welcome back, <span id="managerName">Manager</span>!</p>
+                </div>
+                <div class="header-right">
+                    <div class="user-info">
+                        <div class="user-avatar">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <div class="user-details">
+                            <span class="user-name" id="headerManagerName">Manager Name</span>
+                            <span class="user-role">Training Manager</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div class="dashboard-content">
+                <!-- Quick Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalStudents">0</h3>
+                            <p>Total Students</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalInstructors">0</h3>
+                            <p>Total Instructors</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalExams">0</h3>
+                            <p>Total Exams</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="averagePerformance">0%</h3>
+                            <p>Avg. Performance</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Students Section -->
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2>Students Overview</h2>
+                        <p>All registered students in the system</p>
+                    </div>
+                    
+                    <div class="data-controls">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="studentSearch" placeholder="Search students...">
+                        </div>
+                        <div class="filter-controls">
+                            <select id="studentFilter">
+                                <option value="all">All Students</option>
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                            </select>
+                            <button class="btn btn-primary" onclick="exportStudentData()">
+                                <i class="fas fa-download"></i>
+                                Export
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="data-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Status</th>
+                                    <th>Exams Taken</th>
+                                    <th>Average Score</th>
+                                    <th>Last Active</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="studentsTable">
+                                <!-- Students data will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Instructors Section -->
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2>Instructors Overview</h2>
+                        <p>All instructors and their performance</p>
+                    </div>
+                    
+                    <div class="data-controls">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="instructorSearch" placeholder="Search instructors...">
+                        </div>
+                        <div class="filter-controls">
+                            <select id="instructorFilter">
+                                <option value="all">All Instructors</option>
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                            </select>
+                            <button class="btn btn-primary" onclick="exportInstructorData()">
+                                <i class="fas fa-download"></i>
+                                Export
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="data-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Status</th>
+                                    <th>Exams Created</th>
+                                    <th>Students Taught</th>
+                                    <th>Avg. Student Score</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="instructorsTable">
+                                <!-- Instructors data will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- System Overview -->
+                <div class="content-section">
+                    <div class="section-header">
+                        <h2>System Overview</h2>
+                        <p>Overall system statistics and performance</p>
+                    </div>
+                    
+                    <div class="overview-grid">
+                        <div class="overview-card">
+                            <h3>Exam Statistics</h3>
+                            <div class="overview-stats">
+                                <div class="overview-stat">
+                                    <span class="stat-label">Total Exams</span>
+                                    <span class="stat-value" id="overviewTotalExams">0</span>
+                                </div>
+                                <div class="overview-stat">
+                                    <span class="stat-label">Active Exams</span>
+                                    <span class="stat-value" id="overviewActiveExams">0</span>
+                                </div>
+                                <div class="overview-stat">
+                                    <span class="stat-label">Completed Exams</span>
+                                    <span class="stat-value" id="overviewCompletedExams">0</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="overview-card">
+                            <h3>Performance Metrics</h3>
+                            <div class="overview-stats">
+                                <div class="overview-stat">
+                                    <span class="stat-label">Overall Pass Rate</span>
+                                    <span class="stat-value" id="overviewPassRate">0%</span>
+                                </div>
+                                <div class="overview-stat">
+                                    <span class="stat-label">Average Score</span>
+                                    <span class="stat-value" id="overviewAvgScore">0%</span>
+                                </div>
+                                <div class="overview-stat">
+                                    <span class="stat-label">Total Submissions</span>
+                                    <span class="stat-value" id="overviewSubmissions">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- User Detail Modal -->
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">User Details</h2>
+                <button class="close-btn" onclick="closeUserModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- User details will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Alert Container -->
+    <div id="alertContainer" class="alert-container"></div>
+
+    <script>
+        // Manager-specific dashboard logic
+        let currentUser = null;
+        let students = [];
+        let instructors = [];
+        let systemStats = {};
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserData();
+            loadDashboardData();
+            setupEventListeners();
+        });
+
+        function loadUserData() {
+            const userData = localStorage.getItem('iti_user_data');
+            if (userData) {
+                currentUser = JSON.parse(userData);
+                document.getElementById('managerName').textContent = currentUser.name;
+                document.getElementById('headerManagerName').textContent = currentUser.name;
+            } else {
+                window.location.href = 'demo.html';
+            }
+        }
+
+        function loadDashboardData() {
+            // Mock students data
+            students = [
+                {
+                    id: 1,
+                    name: 'Ahmed Student',
+                    email: 'ahmed.student@iti.gov.eg',
+                    status: 'Active',
+                    examsTaken: 15,
+                    averageScore: 78,
+                    lastActive: '2024-01-15',
+                    department: 'Programming',
+                    enrollmentDate: '2023-09-01'
+                },
+                {
+                    id: 2,
+                    name: 'Fatima Ali',
+                    email: 'fatima.ali@iti.gov.eg',
+                    status: 'Active',
+                    examsTaken: 12,
+                    averageScore: 85,
+                    lastActive: '2024-01-14',
+                    department: 'Web Development',
+                    enrollmentDate: '2023-09-15'
+                },
+                {
+                    id: 3,
+                    name: 'Omar Hassan',
+                    email: 'omar.hassan@iti.gov.eg',
+                    status: 'Active',
+                    examsTaken: 8,
+                    averageScore: 65,
+                    lastActive: '2024-01-10',
+                    department: 'Database',
+                    enrollmentDate: '2023-10-01'
+                },
+                {
+                    id: 4,
+                    name: 'Aisha Mohamed',
+                    email: 'aisha.mohamed@iti.gov.eg',
+                    status: 'Inactive',
+                    examsTaken: 5,
+                    averageScore: 72,
+                    lastActive: '2023-12-20',
+                    department: 'Networking',
+                    enrollmentDate: '2023-08-15'
+                }
+            ];
+
+            // Mock instructors data
+            instructors = [
+                {
+                    id: 1,
+                    name: 'Dr. Sarah Instructor',
+                    email: 'sarah.instructor@iti.gov.eg',
+                    status: 'Active',
+                    examsCreated: 8,
+                    studentsTaught: 45,
+                    avgStudentScore: 78,
+                    department: 'Programming',
+                    joinDate: '2022-01-15'
+                },
+                {
+                    id: 2,
+                    name: 'Prof. Ahmed Database',
+                    email: 'ahmed.database@iti.gov.eg',
+                    status: 'Active',
+                    examsCreated: 6,
+                    studentsTaught: 32,
+                    avgStudentScore: 82,
+                    department: 'Database',
+                    joinDate: '2022-03-01'
+                },
+                {
+                    id: 3,
+                    name: 'Dr. Mohamed Web',
+                    email: 'mohamed.web@iti.gov.eg',
+                    status: 'Active',
+                    examsCreated: 10,
+                    studentsTaught: 38,
+                    avgStudentScore: 85,
+                    department: 'Web Development',
+                    joinDate: '2021-09-01'
+                }
+            ];
+
+            // Mock system statistics
+            systemStats = {
+                totalExams: 24,
+                activeExams: 18,
+                completedExams: 156,
+                passRate: 78,
+                averageScore: 76,
+                totalSubmissions: 342
+            };
+
+            updateDashboard();
+        }
+
+        function updateDashboard() {
+            // Update main stats
+            document.getElementById('totalStudents').textContent = students.length;
+            document.getElementById('totalInstructors').textContent = instructors.length;
+            document.getElementById('totalExams').textContent = systemStats.totalExams;
+            document.getElementById('averagePerformance').textContent = systemStats.averageScore + '%';
+
+            // Update overview stats
+            document.getElementById('overviewTotalExams').textContent = systemStats.totalExams;
+            document.getElementById('overviewActiveExams').textContent = systemStats.activeExams;
+            document.getElementById('overviewCompletedExams').textContent = systemStats.completedExams;
+            document.getElementById('overviewPassRate').textContent = systemStats.passRate + '%';
+            document.getElementById('overviewAvgScore').textContent = systemStats.averageScore + '%';
+            document.getElementById('overviewSubmissions').textContent = systemStats.totalSubmissions;
+
+            // Update students table
+            updateStudentsTable();
+            
+            // Update instructors table
+            updateInstructorsTable();
+        }
+
+        function updateStudentsTable() {
+            const tbody = document.getElementById('studentsTable');
+            tbody.innerHTML = '';
+
+            students.forEach(student => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${student.id}</td>
+                    <td>${student.name}</td>
+                    <td>${student.email}</td>
+                    <td>
+                        <span class="status ${student.status.toLowerCase()}">${student.status}</span>
+                    </td>
+                    <td>${student.examsTaken}</td>
+                    <td>
+                        <span class="score ${student.averageScore >= 80 ? 'high' : student.averageScore >= 60 ? 'medium' : 'low'}">
+                            ${student.averageScore}%
+                        </span>
+                    </td>
+                    <td>${new Date(student.lastActive).toLocaleDateString()}</td>
+                    <td>
+                        <button class="btn btn-sm btn-primary" onclick="viewStudentDetail(${student.id})">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="btn btn-sm btn-secondary" onclick="editStudent(${student.id})">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function updateInstructorsTable() {
+            const tbody = document.getElementById('instructorsTable');
+            tbody.innerHTML = '';
+
+            instructors.forEach(instructor => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${instructor.id}</td>
+                    <td>${instructor.name}</td>
+                    <td>${instructor.email}</td>
+                    <td>
+                        <span class="status ${instructor.status.toLowerCase()}">${instructor.status}</span>
+                    </td>
+                    <td>${instructor.examsCreated}</td>
+                    <td>${instructor.studentsTaught}</td>
+                    <td>
+                        <span class="score ${instructor.avgStudentScore >= 80 ? 'high' : instructor.avgStudentScore >= 60 ? 'medium' : 'low'}">
+                            ${instructor.avgStudentScore}%
+                        </span>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-primary" onclick="viewInstructorDetail(${instructor.id})">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="btn btn-sm btn-secondary" onclick="editInstructor(${instructor.id})">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function viewStudentDetail(studentId) {
+            const student = students.find(s => s.id === studentId);
+            if (student) {
+                document.getElementById('modalTitle').textContent = `Student Details - ${student.name}`;
+                document.getElementById('modalBody').innerHTML = `
+                    <div class="user-detail-grid">
+                        <div class="detail-section">
+                            <h3>Personal Information</h3>
+                            <div class="detail-item">
+                                <strong>Name:</strong> ${student.name}
+                            </div>
+                            <div class="detail-item">
+                                <strong>Email:</strong> ${student.email}
+                            </div>
+                            <div class="detail-item">
+                                <strong>Department:</strong> ${student.department}
+                            </div>
+                            <div class="detail-item">
+                                <strong>Enrollment Date:</strong> ${new Date(student.enrollmentDate).toLocaleDateString()}
+                            </div>
+                        </div>
+                        <div class="detail-section">
+                            <h3>Academic Performance</h3>
+                            <div class="detail-item">
+                                <strong>Exams Taken:</strong> ${student.examsTaken}
+                            </div>
+                            <div class="detail-item">
+                                <strong>Average Score:</strong> ${student.averageScore}%
+                            </div>
+                            <div class="detail-item">
+                                <strong>Status:</strong> <span class="status ${student.status.toLowerCase()}">${student.status}</span>
+                            </div>
+                            <div class="detail-item">
+                                <strong>Last Active:</strong> ${new Date(student.lastActive).toLocaleDateString()}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('userModal').style.display = 'flex';
+            }
+        }
+
+        function viewInstructorDetail(instructorId) {
+            const instructor = instructors.find(i => i.id === instructorId);
+            if (instructor) {
+                document.getElementById('modalTitle').textContent = `Instructor Details - ${instructor.name}`;
+                document.getElementById('modalBody').innerHTML = `
+                    <div class="user-detail-grid">
+                        <div class="detail-section">
+                            <h3>Personal Information</h3>
+                            <div class="detail-item">
+                                <strong>Name:</strong> ${instructor.name}
+                            </div>
+                            <div class="detail-item">
+                                <strong>Email:</strong> ${instructor.email}
+                            </div>
+                            <div class="detail-item">
+                                <strong>Department:</strong> ${instructor.department}
+                            </div>
+                            <div class="detail-item">
+                                <strong>Join Date:</strong> ${new Date(instructor.joinDate).toLocaleDateString()}
+                            </div>
+                        </div>
+                        <div class="detail-section">
+                            <h3>Performance Metrics</h3>
+                            <div class="detail-item">
+                                <strong>Exams Created:</strong> ${instructor.examsCreated}
+                            </div>
+                            <div class="detail-item">
+                                <strong>Students Taught:</strong> ${instructor.studentsTaught}
+                            </div>
+                            <div class="detail-item">
+                                <strong>Average Student Score:</strong> ${instructor.avgStudentScore}%
+                            </div>
+                            <div class="detail-item">
+                                <strong>Status:</strong> <span class="status ${instructor.status.toLowerCase()}">${instructor.status}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('userModal').style.display = 'flex';
+            }
+        }
+
+        function editStudent(studentId) {
+            showAlert(`Editing student ${studentId} - This would open the edit form`, 'info');
+        }
+
+        function editInstructor(instructorId) {
+            showAlert(`Editing instructor ${instructorId} - This would open the edit form`, 'info');
+        }
+
+        function exportStudentData() {
+            showAlert('Exporting student data to CSV...', 'success');
+        }
+
+        function exportInstructorData() {
+            showAlert('Exporting instructor data to CSV...', 'success');
+        }
+
+        function closeUserModal() {
+            document.getElementById('userModal').style.display = 'none';
+        }
+
+        function setupEventListeners() {
+            // Navigation
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = this.getAttribute('href').substring(1);
+                    navigateToSection(target);
+                });
+            });
+
+            // Search functionality
+            document.getElementById('studentSearch').addEventListener('input', function() {
+                filterStudents(this.value);
+            });
+
+            document.getElementById('instructorSearch').addEventListener('input', function() {
+                filterInstructors(this.value);
+            });
+        }
+
+        function filterStudents(searchTerm) {
+            const filteredStudents = students.filter(student => 
+                student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                student.email.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            updateStudentsTableWithData(filteredStudents);
+        }
+
+        function filterInstructors(searchTerm) {
+            const filteredInstructors = instructors.filter(instructor => 
+                instructor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                instructor.email.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            updateInstructorsTableWithData(filteredInstructors);
+        }
+
+        function updateStudentsTableWithData(data) {
+            const tbody = document.getElementById('studentsTable');
+            tbody.innerHTML = '';
+
+            data.forEach(student => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${student.id}</td>
+                    <td>${student.name}</td>
+                    <td>${student.email}</td>
+                    <td>
+                        <span class="status ${student.status.toLowerCase()}">${student.status}</span>
+                    </td>
+                    <td>${student.examsTaken}</td>
+                    <td>
+                        <span class="score ${student.averageScore >= 80 ? 'high' : student.averageScore >= 60 ? 'medium' : 'low'}">
+                            ${student.averageScore}%
+                        </span>
+                    </td>
+                    <td>${new Date(student.lastActive).toLocaleDateString()}</td>
+                    <td>
+                        <button class="btn btn-sm btn-primary" onclick="viewStudentDetail(${student.id})">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="btn btn-sm btn-secondary" onclick="editStudent(${student.id})">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function updateInstructorsTableWithData(data) {
+            const tbody = document.getElementById('instructorsTable');
+            tbody.innerHTML = '';
+
+            data.forEach(instructor => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${instructor.id}</td>
+                    <td>${instructor.name}</td>
+                    <td>${instructor.email}</td>
+                    <td>
+                        <span class="status ${instructor.status.toLowerCase()}">${instructor.status}</span>
+                    </td>
+                    <td>${instructor.examsCreated}</td>
+                    <td>${instructor.studentsTaught}</td>
+                    <td>
+                        <span class="score ${instructor.avgStudentScore >= 80 ? 'high' : instructor.avgStudentScore >= 60 ? 'medium' : 'low'}">
+                            ${instructor.avgStudentScore}%
+                        </span>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-primary" onclick="viewInstructorDetail(${instructor.id})">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="btn btn-sm btn-secondary" onclick="editInstructor(${instructor.id})">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function navigateToSection(section) {
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            const activeLink = document.querySelector(`[href="#${section}"]`);
+            if (activeLink) {
+                activeLink.parentElement.classList.add('active');
+            }
+
+            showSectionContent(section);
+        }
+
+        function showSectionContent(section) {
+            showAlert(`Navigating to ${section} section`, 'info');
+        }
+
+        function logout() {
+            localStorage.removeItem('iti_user_data');
+            localStorage.removeItem('iti_auth_token');
+            localStorage.removeItem('iti_user_role');
+            window.location.href = 'demo.html';
+        }
+
+        function showAlert(message, type = 'info') {
+            const alertContainer = document.getElementById('alertContainer');
+            const alertElement = document.createElement('div');
+            alertElement.className = `alert ${type}`;
+            
+            const iconMap = {
+                success: 'fas fa-check-circle',
+                error: 'fas fa-exclamation-circle',
+                warning: 'fas fa-exclamation-triangle',
+                info: 'fas fa-info-circle'
+            };
+            
+            alertElement.innerHTML = `
+                <i class="${iconMap[type] || iconMap.info}"></i>
+                <span>${message}</span>
+                <button class="alert-close" onclick="this.parentElement.remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            alertContainer.appendChild(alertElement);
+            
+            setTimeout(() => {
+                if (alertElement.parentElement) {
+                    alertElement.remove();
+                }
+            }, 5000);
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('userModal');
+            if (event.target === modal) {
+                closeUserModal();
+            }
+        }
+    </script>
+</body>
+</html> 
